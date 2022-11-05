@@ -62,7 +62,10 @@ function NavBar() {
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Search The Real Fake Store!"
                 />
-                <Search />
+                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                <IconButton color="primary" sx={{ p: "10px" }}>
+                  <Search />
+                </IconButton>
               </Paper>
             </Grid>
 
