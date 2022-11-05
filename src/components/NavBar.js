@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import {
   AppBar,
   Box,
@@ -6,8 +8,9 @@ import {
   Typography,
   IconButton,
   MenuItem,
-  Menu,
   InputBase,
+  Divider,
+  Menu,
   Grid,
 } from "@mui/material"
 
@@ -18,20 +21,37 @@ import {
 } from "@mui/icons-material"
 
 function NavBar() {
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1, mt: "10px" }}
+              >
                 Fake Shop
               </Typography>
             </Grid>
+
             <Grid item xs={4} align="center">
               <Paper
                 component="form"
                 sx={{
+                  m: "4px",
                   p: "2px 4px",
                   display: "flex",
                   alignItems: "center",
@@ -45,36 +65,24 @@ function NavBar() {
                 <Search />
               </Paper>
             </Grid>
-            <Grid item xs={4}>
-              <Box display="flex" justifyContent="flex-end">
-                <IconButton size="large" color="inherit">
-                  <ShoppingCartCheckout />
-                </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
 
-                <Menu
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                >
-                  <MenuItem>Profile</MenuItem>
-                  <MenuItem>My account</MenuItem>
-                </Menu>
-              </Box>
+            <Grid item xs={4} align="right">
+              <IconButton size="large" color="inherit">
+                <ShoppingCartCheckout />
+              </IconButton>
+
+              <IconButton size="large" color="inherit" onClick={handleClick}>
+                <AccountCircle />
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>Settings</MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClose}>My orders</MenuItem>
+                <MenuItem onClick={handleClose}>Wishlist</MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
             </Grid>
           </Grid>
         </Toolbar>
