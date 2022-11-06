@@ -13,8 +13,8 @@ function SearchResults() {
 
       <Box sx={{ flexGrow: 1 }} align="center">
         <Grid container spacing={2}>
-          {results.map(() => (
-            <Grid item xs={12} sm={6} md={4} lg={3} align="center">
+          {results.map((result) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} align="center" key={result}>
               <Box>
                 <SearchResult />
               </Box>
