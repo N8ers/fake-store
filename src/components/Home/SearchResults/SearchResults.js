@@ -12,7 +12,7 @@ function SearchResults() {
       <h3>Results For: (...put in here)</h3>
 
       <Box sx={{ flexGrow: 1 }} align="center">
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           {results.map((result) => (
             <Grid item xs={12} sm={6} md={4} lg={3} align="center" key={result}>
               <Box>

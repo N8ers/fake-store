@@ -4,28 +4,24 @@
   padding: 20px;
 }
 
-.boxOne {
+.box {
   height: 200px;
+  padding: 20px;
   text-align: left;
   background-color: white;
 }
 
+.boxOne {
+}
+
 .boxTwo {
-  height: 200px;
-  background-color: white;
 }
 
 .boxThree {
-  height: 200px;
-  background-color: white;
 }
 
 .boxFour {
-  height: 200px;
-  background-color: white;
 }
 
 .boxFive {
-  height: 200px;
-  background-color: white;
 }
