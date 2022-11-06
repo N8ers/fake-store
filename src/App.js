@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom"
 
-import NavBar from "./components/NavBar"
+import NavBar from "./components/UI/NavBar/NavBar"
 
-import Home from "./pages/Home"
-import UserSettings from "./pages/UserSettings"
+import Home from "./pages/Home/Home"
+import UserSettings from "./pages/UserSettings/UserSettings"
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <NavBar />
 
       <Routes>
