@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 
 import {
   AppBar,
@@ -21,6 +22,15 @@ import {
 } from "@mui/icons-material"
 
 function NavBar() {
+  const dispatch = useDispatch()
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    dispatch({ type: "SEARCH/SEARCH_TERM", payload: search })
+  }
+
+  const [search, setSearch] = useState("")
+
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -50,6 +60,7 @@ function NavBar() {
             <Grid item xs={4} align="center">
               <Paper
                 component="form"
+                onSubmit={handleSearch}
                 sx={{
                   m: "4px",
                   p: "2px 4px",
@@ -61,6 +72,8 @@ function NavBar() {
                 <InputBase
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Search The Real Fake Store!"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <IconButton color="primary" sx={{ p: "10px" }}>
