@@ -1,6 +1,6 @@
 import { Box, Grid } from "@mui/material"
 
-import SearchResult from "./SearchResult"
+import SearchResult from "../SearchResult/SearchResult"
 
 import styles from "./SearchResults.module.css"
 

@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import DefaultHome from "../components/Home/DefaultHome"
-import SearchResults from "../components/Home/SearchResults"
+import DefaultHome from "../../components/Home/DefaultHome/DefaultHome"
+import SearchResults from "../../components/Home/SearchResults/SearchResults"
 
 // import styles from "./Home.module.css"
 
