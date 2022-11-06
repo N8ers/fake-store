@@ -3,7 +3,7 @@ import { useState } from "react"
 import DefaultHome from "../components/Home/DefaultHome"
 import SearchResults from "../components/Home/SearchResults"
 
-import styles from "./Home.module.css"
+// import styles from "./Home.module.css"
 
 function Home() {
   const [isSearching, setIsSearching] = useState(false)
