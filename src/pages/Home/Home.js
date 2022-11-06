@@ -1,4 +1,7 @@
-import { useSelector } from "react-redux"
+import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+
+import { fetchTheData } from "../../store"
 
 import DefaultHome from "../../components/Home/DefaultHome/DefaultHome"
 import SearchResults from "../../components/Home/SearchResults/SearchResults"
@@ -7,6 +10,11 @@ import SearchResults from "../../components/Home/SearchResults/SearchResults"
 
 function Home() {
   const searchTerm = useSelector((state) => state.searchTerm)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTheData())
+  }, [])
 
   return (
     <div>

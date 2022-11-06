@@ -26,7 +26,7 @@ function NavBar() {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    dispatch({ type: "SEARCH/SEARCH_TERM", payload: search })
+    dispatch({ type: "search/SEARCH_TERM", payload: search })
   }
 
   const [search, setSearch] = useState("")
