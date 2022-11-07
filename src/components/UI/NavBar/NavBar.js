@@ -76,7 +76,7 @@ function NavBar() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <IconButton color="primary" sx={{ p: "10px" }}>
+                <IconButton color="primary" sx={{ p: "10px" }} type="submit">
                   <Search />
                 </IconButton>
               </Paper>

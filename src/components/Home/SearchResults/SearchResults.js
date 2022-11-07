@@ -6,7 +6,7 @@ import SearchResult from "../SearchResult/SearchResult"
 import styles from "./SearchResults.module.css"
 
 function SearchResults() {
-  const searchTerm = useSelector((state) => state.searchTerm)
+  const searchTerm = useSelector((state) => state.search.searchTerm)
 
   const results = [1, 2, 3, 4, 5, 6]
 

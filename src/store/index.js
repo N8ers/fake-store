@@ -28,7 +28,7 @@ export const db = getFirestore()
  * returns a new state value
  * (state, action) => newState
  */
-function searchReducer(state = { searchTerm: "", searchResults: {} }, action) {
+function searchReducer(state = { searchTerm: "", searchResults: [] }, action) {
   switch (action.type) {
     case "search/SEARCH_TERM":
       return { searchTerm: action.payload }
@@ -41,23 +41,36 @@ function searchReducer(state = { searchTerm: "", searchResults: {} }, action) {
   }
 }
 
+function userReducer(state = {}, action) {
+  return state
+}
+
 // Thunk Action Creator = create a function that gives access to state and allow you dispatch new actions
 export const fetchTheData = () => async (dispatch, getState) => {
-  const collectionRef = collection(db, "categories")
-  const q = query(collectionRef)
-  const querySnapshot = await getDocs(q)
+  // const collectionRef = collection(db, "categories")
+  // const q = query(collectionRef)
+  // const querySnapshot = await getDocs(q)
 
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data()
-    acc[title.toLowerCase()] = items
-    return acc
-  }, {})
+  // const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+  //   const { title, items } = docSnapshot.data()
+  //   acc[title.toLowerCase()] = items
+  //   return acc
+  // }, {})
 
-  dispatch({ type: "search/SET_RESULTS", payload: categoryMap })
+  // dispatch({ type: "search/SET_RESULTS", payload: categoryMap })
+
+  dispatch({ type: "search/SET_RESULTS", payload: [] })
+}
+
+function rootReducer(state = {}, action) {
+  return {
+    search: searchReducer(state.search, action),
+    user: userReducer(state.user, action),
+  }
 }
 
 const store = createStore(
-  searchReducer,
+  rootReducer,
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

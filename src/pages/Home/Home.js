@@ -9,7 +9,7 @@ import SearchResults from "../../components/Home/SearchResults/SearchResults"
 // import styles from "./Home.module.css"
 
 function Home() {
-  const searchTerm = useSelector((state) => state.searchTerm)
+  const searchTerm = useSelector((state) => state.search.searchTerm)
   const dispatch = useDispatch()
 
   useEffect(() => {
