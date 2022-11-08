@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-
 import {
   AppBar,
   Box,
@@ -13,9 +12,12 @@ import {
   Divider,
   Menu,
   Dialog,
+  TextField,
   DialogTitle,
   Button,
   Grid,
+  FormControl,
+  FormLabel,
 } from "@mui/material"
 
 import {
@@ -23,6 +25,11 @@ import {
   ShoppingCartCheckout,
   Search,
 } from "@mui/icons-material"
+
+import {
+  signInWithGooglePopup,
+  createUserDocumentFromAuth,
+} from "../../../store"
 
 function NavBar() {
   const dispatch = useDispatch()
@@ -35,17 +42,29 @@ function NavBar() {
 
   const [search, setSearch] = useState("")
 
+  // MENU
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-
-  const [isOpen, setIsOpen] = useState(false)
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
-
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  // LOGIN DIALOG
+  const [isOpen, setIsOpen] = useState(false)
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const login = () => {
+    alert(username, password)
+  }
+
+  const logGoogleUser = async () => {
+    const { user } = await signInWithGooglePopup()
+    console.log(user)
+    console.log(user.uid)
+    createUserDocumentFromAuth(user)
   }
 
   return (
@@ -112,7 +131,7 @@ function NavBar() {
                   </Menu>{" "}
                 </>
               ) : (
-                <Button variant="contained" onClick={() => setIsOpen(true)}>
+                <Button variant="contained" onClick={logGoogleUser}>
                   Log In
                 </Button>
               )}
@@ -122,8 +141,21 @@ function NavBar() {
       </AppBar>
 
       <Dialog open={isOpen}>
-        <DialogTitle>Login</DialogTitle>
-        <Button onClick={() => setIsOpen(false)}>CLOSE</Button>
+        <Button onClick={logGoogleUser}>Google Signin</Button>
+
+        {/* <DialogTitle>Login</DialogTitle>
+
+        <FormControl>
+          <TextField id="name-input" name="name" label="email" type="text" />
+          <TextField id="name-input" name="name" label="password" type="text" />
+
+          <Button onClick={logGoogleUser}>Google Signin</Button>
+
+          <FormLabel>Sign In</FormLabel>
+        </FormControl>
+
+        <Button>Sign Up</Button>
+        <Button onClick={() => setIsOpen(false)}>CLOSE</Button> */}
       </Dialog>
     </Box>
   )

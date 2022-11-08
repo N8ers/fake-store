@@ -1,14 +1,22 @@
 import { createStore, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
-import { getFirestore, collection, query, getDocs } from "firebase/firestore"
-
-// Import the functions you need from the SDKs you need
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  collection,
+  query,
+  getDoc,
+} from "firebase/firestore"
+import {
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  signOut,
+  GoogleAuthProvider,
+} from "firebase/auth"
 import { initializeApp } from "firebase/app"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -21,7 +29,26 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig)
+
+const provider = new GoogleAuthProvider()
+provider.setCustomParameters({
+  prompt: "select_account",
+})
+
+export const auth = getAuth()
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+// export const signOutWithGoogle = () => signOut(auth, provider)
+
 export const db = getFirestore()
+
+export const createUserDocumentFromAuth = async (userAuth) => {
+  // GET if user exists or CREATE and GET user
+  const userDocRef = doc(db, "users", userAuth.uid)
+  console.log(userDocRef)
+  const userSnapshot = await getDoc(userDocRef)
+  console.log(userSnapshot)
+  console.log(userSnapshot.exists())
+}
 
 /**
  * Reducer - a function tha ttakes a current state value and action object describing "what happened"
