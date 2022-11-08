@@ -41,7 +41,7 @@ function searchReducer(state = { searchTerm: "", searchResults: [] }, action) {
   }
 }
 
-function userReducer(state = {}, action) {
+function userReducer(state = { isLoggedIn: false }, action) {
   return state
 }
 

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 import {
   AppBar,
@@ -12,6 +12,9 @@ import {
   InputBase,
   Divider,
   Menu,
+  Dialog,
+  DialogTitle,
+  Button,
   Grid,
 } from "@mui/material"
 
@@ -23,6 +26,7 @@ import {
 
 function NavBar() {
   const dispatch = useDispatch()
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -33,6 +37,8 @@ function NavBar() {
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
+
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -83,26 +89,42 @@ function NavBar() {
             </Grid>
 
             <Grid item xs={4} align="right">
-              <IconButton size="large" color="inherit">
-                <ShoppingCartCheckout />
-              </IconButton>
-
-              <IconButton size="large" color="inherit" onClick={handleClick}>
-                <AccountCircle />
-              </IconButton>
-              <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Settings</MenuItem>
-                <Divider />
-                <MenuItem onClick={handleClose}>My orders</MenuItem>
-                <MenuItem onClick={handleClose}>Wishlist</MenuItem>
-                <Divider />
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </Menu>
+              {isLoggedIn ? (
+                <>
+                  <IconButton size="large" color="inherit">
+                    <ShoppingCartCheckout />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    onClick={handleClick}
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={handleClose}>Settings</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleClose}>My orders</MenuItem>
+                    <MenuItem onClick={handleClose}>Wishlist</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  </Menu>{" "}
+                </>
+              ) : (
+                <Button variant="contained" onClick={() => setIsOpen(true)}>
+                  Log In
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
+
+      <Dialog open={isOpen}>
+        <DialogTitle>Login</DialogTitle>
+        <Button onClick={() => setIsOpen(false)}>CLOSE</Button>
+      </Dialog>
     </Box>
   )
 }
