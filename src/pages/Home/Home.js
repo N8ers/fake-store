@@ -14,7 +14,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(fetchTheData())
-  }, [])
+  }, [dispatch])
 
   return (
     <div>

@@ -6,16 +6,9 @@ import {
   setDoc,
   collection,
   writeBatch,
-  query,
   getDoc,
 } from "firebase/firestore"
-import {
-  getAuth,
-  signInWithRedirect,
-  signInWithPopup,
-  signOut,
-  GoogleAuthProvider,
-} from "firebase/auth"
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { initializeApp } from "firebase/app"
 import { SHOP_DATA } from "./shop-data-seed"
 
@@ -30,7 +23,8 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig)
+// const firebaseApp = initializeApp(firebaseConfig)
+initializeApp(firebaseConfig)
 
 const provider = new GoogleAuthProvider()
 provider.setCustomParameters({
@@ -107,7 +101,7 @@ function searchReducer(state = { searchTerm: "", searchResults: [] }, action) {
   }
 }
 
-function userReducer(state = { isLoggedIn: true }, action) {
+function userReducer(state = { isLoggedIn: false }, action) {
   return state
 }
 

@@ -11,13 +11,8 @@ import {
   InputBase,
   Divider,
   Menu,
-  Dialog,
-  TextField,
-  DialogTitle,
   Button,
   Grid,
-  FormControl,
-  FormLabel,
 } from "@mui/material"
 
 import {
@@ -55,19 +50,10 @@ function NavBar() {
   }
 
   // LOGIN DIALOG
-  const [isOpen, setIsOpen] = useState(false)
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const login = () => {
-    alert(username, password)
-  }
 
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup()
-    console.log(user)
-    console.log(user.uid)
-    const userDocRef = await createUserDocumentFromAuth(user)
-    console.log({ userDocRef })
+    await createUserDocumentFromAuth(user)
   }
 
   return (
@@ -146,24 +132,6 @@ function NavBar() {
           </Grid>
         </Toolbar>
       </AppBar>
-
-      <Dialog open={isOpen}>
-        <Button onClick={logGoogleUser}>Google Signin</Button>
-
-        {/* <DialogTitle>Login</DialogTitle>
-
-        <FormControl>
-          <TextField id="name-input" name="name" label="email" type="text" />
-          <TextField id="name-input" name="name" label="password" type="text" />
-
-          <Button onClick={logGoogleUser}>Google Signin</Button>
-
-          <FormLabel>Sign In</FormLabel>
-        </FormControl>
-
-        <Button>Sign Up</Button>
-        <Button onClick={() => setIsOpen(false)}>CLOSE</Button> */}
-      </Dialog>
     </Box>
   )
 }
