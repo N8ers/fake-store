@@ -64,7 +64,8 @@ function NavBar() {
     const { user } = await signInWithGooglePopup()
     console.log(user)
     console.log(user.uid)
-    createUserDocumentFromAuth(user)
+    const userDocRef = await createUserDocumentFromAuth(user)
+    console.log({ userDocRef })
   }
 
   return (
