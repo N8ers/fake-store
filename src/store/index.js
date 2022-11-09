@@ -5,6 +5,7 @@ import {
   doc,
   setDoc,
   collection,
+  writeBatch,
   query,
   getDoc,
 } from "firebase/firestore"
@@ -16,6 +17,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth"
 import { initializeApp } from "firebase/app"
+import { SHOP_DATA } from "./shop-data-seed"
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -40,6 +42,26 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
 // export const signOutWithGoogle = () => signOut(auth, provider)
 
 export const db = getFirestore()
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey)
+  const batch = writeBatch(db)
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase())
+    batch.set(docRef, object)
+  })
+
+  await batch.commit()
+  console.log("done")
+}
+
+export const seedDB = () => {
+  addCollectionAndDocuments("categories", SHOP_DATA)
+}
 
 export const createUserDocumentFromAuth = async (userAuth) => {
   // GET if user exists or CREATE and GET user
@@ -85,7 +107,7 @@ function searchReducer(state = { searchTerm: "", searchResults: [] }, action) {
   }
 }
 
-function userReducer(state = { isLoggedIn: false }, action) {
+function userReducer(state = { isLoggedIn: true }, action) {
   return state
 }
 

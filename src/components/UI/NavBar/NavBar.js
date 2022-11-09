@@ -24,11 +24,13 @@ import {
   AccountCircle,
   ShoppingCartCheckout,
   Search,
+  Forest,
 } from "@mui/icons-material"
 
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
+  seedDB,
 } from "../../../store"
 
 function NavBar() {
@@ -111,6 +113,10 @@ function NavBar() {
             <Grid item xs={4} align="right">
               {isLoggedIn ? (
                 <>
+                  <Button size="large" color="inherit" onClick={seedDB}>
+                    <Forest />
+                    Seed DB
+                  </Button>
                   <IconButton size="large" color="inherit">
                     <ShoppingCartCheckout />
                   </IconButton>
