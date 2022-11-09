@@ -1,4 +1,7 @@
-import { useState } from "react"
+import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+
+import { fetchTheData } from "../../store"
 
 import DefaultHome from "../../components/Home/DefaultHome/DefaultHome"
 import SearchResults from "../../components/Home/SearchResults/SearchResults"
@@ -6,12 +9,16 @@ import SearchResults from "../../components/Home/SearchResults/SearchResults"
 // import styles from "./Home.module.css"
 
 function Home() {
-  const [isSearching, setIsSearching] = useState(false)
+  const searchTerm = useSelector((state) => state.search.searchTerm)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTheData())
+  }, [dispatch])
 
   return (
     <div>
-      <button onClick={() => setIsSearching(!isSearching)}>toggle!</button>
-      <div>{isSearching ? <SearchResults /> : <DefaultHome />}</div>
+      <div>{searchTerm.length ? <SearchResults /> : <DefaultHome />}</div>
     </div>
   )
 }

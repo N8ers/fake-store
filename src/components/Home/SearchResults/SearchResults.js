@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux"
 import { Box, Grid } from "@mui/material"
 
 import SearchResult from "../SearchResult/SearchResult"
@@ -5,11 +6,13 @@ import SearchResult from "../SearchResult/SearchResult"
 import styles from "./SearchResults.module.css"
 
 function SearchResults() {
+  const searchTerm = useSelector((state) => state.search.searchTerm)
+
   const results = [1, 2, 3, 4, 5, 6]
 
   return (
     <div className={styles.container}>
-      <h3>Results For: (...put in here)</h3>
+      <h3>Results For: "{searchTerm}"</h3>
 
       <Box sx={{ flexGrow: 1 }} align="center">
         <Grid container spacing={5}>
