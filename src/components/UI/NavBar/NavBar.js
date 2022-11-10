@@ -25,12 +25,14 @@ import {
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
+  logUserOutGoogle,
   seedDB,
 } from "../../../store"
 
 function NavBar() {
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  const firstName = useSelector((state) => state.user.firstName)
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -49,11 +51,16 @@ function NavBar() {
     setAnchorEl(null)
   }
 
-  // LOGIN DIALOG
-
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup()
-    await createUserDocumentFromAuth(user)
+    const result = await createUserDocumentFromAuth(user)
+    dispatch({ type: "user/SET_USER", payload: result })
+  }
+
+  const logUserOut = async () => {
+    await logUserOutGoogle()
+    handleClose()
+    dispatch({ type: "user/CLEAR_USER" })
   }
 
   return (
@@ -99,6 +106,7 @@ function NavBar() {
             <Grid item xs={4} align="right">
               {isLoggedIn ? (
                 <>
+                  <span>Hi, {firstName}</span>
                   <Button size="large" color="inherit" onClick={seedDB}>
                     <Forest />
                     Seed DB
@@ -120,11 +128,16 @@ function NavBar() {
                     <MenuItem onClick={handleClose}>My orders</MenuItem>
                     <MenuItem onClick={handleClose}>Wishlist</MenuItem>
                     <Divider />
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={logUserOut}>Logout</MenuItem>
                   </Menu>{" "}
                 </>
               ) : (
-                <Button variant="contained" onClick={logGoogleUser}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ mt: 1 }}
+                  onClick={logGoogleUser}
+                >
                   Log In
                 </Button>
               )}
