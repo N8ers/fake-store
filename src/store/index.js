@@ -10,6 +10,8 @@ import {
 } from "firebase/firestore"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { initializeApp } from "firebase/app"
+import { useDispatch } from "react-redux"
+
 import { SHOP_DATA } from "./shop-data-seed"
 
 const firebaseConfig = {
@@ -60,10 +62,7 @@ export const seedDB = () => {
 export const createUserDocumentFromAuth = async (userAuth) => {
   // GET if user exists or CREATE and GET user
   const userDocRef = doc(db, "users", userAuth.uid)
-  console.log(userDocRef)
   const userSnapshot = await getDoc(userDocRef)
-  console.log(userSnapshot)
-  console.log(userSnapshot.exists())
 
   if (!userSnapshot.exists()) {
     // create user in db
@@ -80,7 +79,11 @@ export const createUserDocumentFromAuth = async (userAuth) => {
       console.log("error creating user: ", error)
     }
   }
-  return userDocRef
+
+  const { displayName, email, uid } = userAuth
+  // dispatch({ type: "user/SET_USER", payload: {displayName, email, uid} })
+
+  return { displayName, email, uid }
 }
 
 /**
@@ -101,8 +104,21 @@ function searchReducer(state = { searchTerm: "", searchResults: [] }, action) {
   }
 }
 
-function userReducer(state = { isLoggedIn: false }, action) {
-  return state
+const initUserState = {
+  isLoggedIn: false,
+  displayName: "",
+  email: "",
+  uid: "",
+}
+
+function userReducer(state = initUserState, action) {
+  switch (action.type) {
+    case "user/SET_USER":
+      return { ...state, isLoggedIn: true, ...action.payload }
+
+    default:
+      return false
+  }
 }
 
 // Thunk Action Creator = create a function that gives access to state and allow you dispatch new actions

@@ -49,11 +49,10 @@ function NavBar() {
     setAnchorEl(null)
   }
 
-  // LOGIN DIALOG
-
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup()
-    await createUserDocumentFromAuth(user)
+    const result = await createUserDocumentFromAuth(user)
+    dispatch({ type: "user/SET_USER", payload: result })
   }
 
   return (
@@ -124,7 +123,12 @@ function NavBar() {
                   </Menu>{" "}
                 </>
               ) : (
-                <Button variant="contained" onClick={logGoogleUser}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ mt: 1 }}
+                  onClick={logGoogleUser}
+                >
                   Log In
                 </Button>
               )}
