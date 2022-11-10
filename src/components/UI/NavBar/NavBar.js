@@ -27,7 +27,7 @@ import {
   createUserDocumentFromAuth,
   logUserOutGoogle,
   seedDB,
-} from "../../../firebaseHelpers"
+} from "../../../firebase/firebaseHelpers"
 
 function NavBar() {
   const dispatch = useDispatch()

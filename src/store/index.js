@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
 
-import { getFirebaseData } from "../firebaseHelpers"
+import { getFirebaseData } from "../firebase/firebaseHelpers"
 
 /**
  * Reducer - a function tha ttakes a current state value and action object describing "what happened"

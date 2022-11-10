@@ -11,7 +11,7 @@ import {
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { initializeApp } from "firebase/app"
 
-import { SHOP_DATA } from "./shop-data-seed"
+import { SHOP_DATA } from "../shop-data-seed"
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
