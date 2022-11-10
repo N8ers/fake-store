@@ -32,6 +32,7 @@ import {
 function NavBar() {
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  const firstName = useSelector((state) => state.user.firstName)
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -105,6 +106,7 @@ function NavBar() {
             <Grid item xs={4} align="right">
               {isLoggedIn ? (
                 <>
+                  <span>Hi, {firstName}</span>
                   <Button size="large" color="inherit" onClick={seedDB}>
                     <Forest />
                     Seed DB

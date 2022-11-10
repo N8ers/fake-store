@@ -111,6 +111,7 @@ function searchReducer(state = { searchTerm: "", searchResults: [] }, action) {
 const initUserState = {
   isLoggedIn: false,
   displayName: "",
+  firstName: "",
   email: "",
   uid: "",
 }
@@ -118,7 +119,8 @@ const initUserState = {
 function userReducer(state = initUserState, action) {
   switch (action.type) {
     case "user/SET_USER":
-      return { ...state, isLoggedIn: true, ...action.payload }
+      const firstName = action.payload.displayName.split(" ")[0]
+      return { ...state, isLoggedIn: true, firstName, ...action.payload }
     case "user/CLEAR_USER":
       return { ...initUserState }
 
