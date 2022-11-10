@@ -25,6 +25,7 @@ import {
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
+  logUserOutGoogle,
   seedDB,
 } from "../../../store"
 
@@ -53,6 +54,12 @@ function NavBar() {
     const { user } = await signInWithGooglePopup()
     const result = await createUserDocumentFromAuth(user)
     dispatch({ type: "user/SET_USER", payload: result })
+  }
+
+  const logUserOut = async () => {
+    await logUserOutGoogle()
+    handleClose()
+    dispatch({ type: "user/CLEAR_USER" })
   }
 
   return (
@@ -119,7 +126,7 @@ function NavBar() {
                     <MenuItem onClick={handleClose}>My orders</MenuItem>
                     <MenuItem onClick={handleClose}>Wishlist</MenuItem>
                     <Divider />
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={logUserOut}>Logout</MenuItem>
                   </Menu>{" "}
                 </>
               ) : (

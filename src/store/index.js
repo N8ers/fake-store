@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { initializeApp } from "firebase/app"
-import { useDispatch } from "react-redux"
 
 import { SHOP_DATA } from "./shop-data-seed"
 
@@ -57,6 +56,11 @@ export const addCollectionAndDocuments = async (
 
 export const seedDB = () => {
   addCollectionAndDocuments("categories", SHOP_DATA)
+}
+
+export const logUserOutGoogle = async () => {
+  await auth.signOut()
+  return true
 }
 
 export const createUserDocumentFromAuth = async (userAuth) => {
@@ -115,6 +119,8 @@ function userReducer(state = initUserState, action) {
   switch (action.type) {
     case "user/SET_USER":
       return { ...state, isLoggedIn: true, ...action.payload }
+    case "user/CLEAR_USER":
+      return { ...initUserState }
 
     default:
       return false
