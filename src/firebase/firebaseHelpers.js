@@ -12,7 +12,6 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { initializeApp } from "firebase/app"
 
 import { firebaseConfig } from "./firebaseConfig"
-
 import { SHOP_DATA } from "./shop-data-seed"
 
 initializeApp(firebaseConfig)
@@ -23,9 +22,15 @@ provider.setCustomParameters({
 })
 
 export const auth = getAuth()
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
-
 export const db = getFirestore()
+
+////////////////////
+// SEED DB HELPER //
+////////////////////
+
+export const seedDB = () => {
+  addCollectionAndDocuments("categories", SHOP_DATA)
+}
 
 export const addCollectionAndDocuments = async (
   collectionKey,
@@ -43,13 +48,33 @@ export const addCollectionAndDocuments = async (
   console.log("done")
 }
 
-export const seedDB = () => {
-  addCollectionAndDocuments("categories", SHOP_DATA)
-}
+//////////////////
+// AUTH HELPERS //
+//////////////////
 
 export const logUserOutGoogle = async () => {
   await auth.signOut()
   return true
+}
+
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+
+////////////////
+// DB Helpers //
+////////////////
+
+export const getFirebaseData = async () => {
+  const collectionRef = collection(db, "categories")
+  const q = query(collectionRef)
+  const querySnapshot = await getDocs(q)
+
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data()
+    acc[title.toLowerCase()] = items
+    return acc
+  }, {})
+
+  return categoryMap
 }
 
 export const createUserDocumentFromAuth = async (userAuth) => {
@@ -77,18 +102,4 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   // dispatch({ type: "user/SET_USER", payload: {displayName, email, uid} })
 
   return { displayName, email, uid }
-}
-
-export const getFirebaseData = async () => {
-  const collectionRef = collection(db, "categories")
-  const q = query(collectionRef)
-  const querySnapshot = await getDocs(q)
-
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data()
-    acc[title.toLowerCase()] = items
-    return acc
-  }, {})
-
-  return categoryMap
 }
