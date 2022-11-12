@@ -3,15 +3,18 @@
  * returns a new state value
  * (state, action) => newState
  */
+
+import { SEARCH_ACTION_TYPES } from "./search.types"
+
 export function searchReducer(
   state = { searchTerm: "", searchResults: [] },
   action
 ) {
   switch (action.type) {
-    case "search/SEARCH_TERM":
+    case SEARCH_ACTION_TYPES.SET_TERM:
       return { ...state, searchTerm: action.payload }
 
-    case "search/SET_RESULTS":
+    case SEARCH_ACTION_TYPES.SET_RESULTS:
       return { ...state, searchResults: action.payload }
 
     default:
