@@ -2,24 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
 
 import { getFirebaseData } from "../firebase/firebaseHelpers"
-
-/**
- * Reducer - a function tha ttakes a current state value and action object describing "what happened"
- * returns a new state value
- * (state, action) => newState
- */
-function searchReducer(state = { searchTerm: "", searchResults: [] }, action) {
-  switch (action.type) {
-    case "search/SEARCH_TERM":
-      return { searchTerm: action.payload }
-
-    case "search/SET_RESULTS":
-      return { ...state, searchResults: action.payload }
-
-    default:
-      return state
-  }
-}
+import { searchReducer } from "./search/search.reducer"
 
 const initUserState = {
   isLoggedIn: false,
