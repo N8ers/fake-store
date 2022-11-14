@@ -2,28 +2,8 @@ import { createStore, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
 
 import { getFirebaseData } from "../firebase/firebaseHelpers"
-import { searchReducer } from "./search/search.reducer"
-
-const initUserState = {
-  isLoggedIn: false,
-  displayName: "",
-  firstName: "",
-  email: "",
-  uid: "",
-}
-
-function userReducer(state = initUserState, action) {
-  switch (action.type) {
-    case "user/SET_USER":
-      const firstName = action.payload.displayName.split(" ")[0]
-      return { ...state, isLoggedIn: true, firstName, ...action.payload }
-    case "user/CLEAR_USER":
-      return { ...initUserState }
-
-    default:
-      return false
-  }
-}
+import { searchReducer } from "./search.reducer"
+import { userReducer } from "./user.reducer"
 
 // Thunk Action Creator = create a function that gives access to state and allow you dispatch new actions
 export const fetchTheData = () => async (dispatch, getState) => {
