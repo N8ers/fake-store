@@ -1,9 +1,9 @@
 import { combineReducers } from "redux"
 
-// import { userReducer } from ""
-// import { searchReducer } from ""
+import { searchReducer } from "./search.reducer"
+import { userReducer } from "./user.reducer"
 
 export const rootReducer = combineReducers({
-  search: null,
-  user: null,
+  search: searchReducer,
+  user: userReducer,
 })
