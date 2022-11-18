@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
-import { onAuthStateChanged } from "firebase/auth"
+import { useDispatch } from "react-redux"
 
-import { auth } from "./firebase/firebaseHelpers"
+import { checkAuthOnLoad } from "./store"
 
 import NavBar from "./components/UI/NavBar/NavBar"
 
@@ -10,10 +10,10 @@ import Home from "./pages/Home/Home"
 import UserSettings from "./pages/UserSettings/UserSettings"
 
 function App() {
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user)
-    })
+    dispatch(checkAuthOnLoad())
   }, [])
 
   return (
