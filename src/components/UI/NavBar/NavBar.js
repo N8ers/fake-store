@@ -54,7 +54,12 @@ function NavBar() {
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup()
     const result = await createUserDocumentFromAuth(user)
-    dispatch({ type: "user/SET_USER", payload: result })
+    const payload = {
+      displayName: result.displayName,
+      email: result.email,
+      uid: result.uid,
+    }
+    dispatch({ type: "user/SET_USER", payload: payload })
   }
 
   const logUserOut = async () => {

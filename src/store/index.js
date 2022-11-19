@@ -15,7 +15,12 @@ export const fetchTheData = () => async (dispatch, getState) => {
 export const checkAuthOnLoad = () => async (dispatch, getState) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // dispatch user to store
+      const payload = {
+        displayName: user.displayName,
+        email: user.email,
+        uid: user.uid,
+      }
+      dispatch({ type: "user/SET_USER", payload })
     }
     return user
   })
