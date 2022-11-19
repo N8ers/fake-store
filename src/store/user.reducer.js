@@ -17,10 +17,7 @@ export function userReducer(state = initialUserState, action) {
 
   switch (type) {
     case USER_ACTION_TYPES.SET_USER:
-      // WE SHOULDNT be modifying state in the reducer
-      // Payload should already be in the right shape
-      const firstName = payload.displayName.split(" ")[0]
-      return { ...state, isLoggedIn: true, firstName, ...payload }
+      return { ...state, ...payload }
     case USER_ACTION_TYPES.CLEAR_USER:
       return { ...initialUserState }
 

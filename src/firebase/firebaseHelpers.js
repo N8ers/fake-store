@@ -79,6 +79,20 @@ export const getFirebaseData = async () => {
   return categoryMap
 }
 
+export const getUserCart = async (cartDocumentId) => {
+  const cartDocRef = doc(db, "carts", cartDocumentId)
+  const cartSnapshot = await getDoc(cartDocRef)
+
+  return cartSnapshot.data()
+}
+
+export const getUserData = async (uid) => {
+  const userDocRef = doc(db, "users", uid)
+  const userSnapshot = await getDoc(userDocRef)
+
+  return userSnapshot.data()
+}
+
 export const createUserDocumentFromAuth = async (userAuth) => {
   // GET if user exists or CREATE and GET user
   const userDocRef = doc(db, "users", userAuth.uid)

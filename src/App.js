@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { CircularProgress, Backdrop } from "@mui/material"
 
-import { checkAuthOnLoad } from "./store"
+import { checkAuthOnLoad, loadUserData } from "./store"
 
 import NavBar from "./components/UI/NavBar/NavBar"
 
@@ -16,10 +16,15 @@ function App() {
   const dispatch = useDispatch()
 
   const isLoading = useSelector((state) => state.general.isLoading)
+  const userUid = useSelector((state) => state.user.uid)
 
   useEffect(() => {
     dispatch(checkAuthOnLoad())
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(loadUserData())
+  }, [dispatch, userUid])
 
   return (
     <div>
