@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuthOnLoad())
-  }, [])
+  })
 
   return (
     <div>
