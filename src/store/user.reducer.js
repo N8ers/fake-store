@@ -1,3 +1,8 @@
+const USER_ACTION_TYPES = {
+  SET_USER: "user/SET_USER",
+  CLEAR_USER: "user/CLEAR_USER",
+}
+
 const initUserState = {
   isLoggedIn: false,
   displayName: "",
@@ -7,14 +12,16 @@ const initUserState = {
 }
 
 export function userReducer(state = initUserState, action) {
-  switch (action.type) {
-    case "user/SET_USER":
-      const firstName = action.payload.displayName.split(" ")[0]
-      return { ...state, isLoggedIn: true, firstName, ...action.payload }
-    case "user/CLEAR_USER":
+  const { type, payload } = action
+
+  switch (type) {
+    case USER_ACTION_TYPES.SET_USER:
+      const firstName = payload.displayName.split(" ")[0]
+      return { ...state, isLoggedIn: true, firstName, ...payload }
+    case USER_ACTION_TYPES.CLEAR_USER:
       return { ...initUserState }
 
     default:
-      return false
+      return state
   }
 }
