@@ -1,5 +1,6 @@
-import { Box, Grid, Button } from "@mui/material"
+import { Box, Grid, Button, Snackbar, Alert } from "@mui/material"
 import { useSelector, useDispatch } from "react-redux"
+import { useState } from "react"
 
 import { checkout } from "../../store/index"
 
@@ -11,17 +12,20 @@ import styles from "./Cart.module.css"
 function Cart() {
   const dispatch = useDispatch()
   const { cartTotal, items } = useSelector((state) => state.cart)
+  const [isCheckedout, setIsCheckedout] = useState(false)
 
-  const handleCheckout = () => {
-    dispatch(checkout())
+  const handleCheckout = async () => {
+    await dispatch(checkout())
+    setIsCheckedout(true)
+  }
 
-    // then show success toast!
+  const handleSnackbarClose = () => {
+    setIsCheckedout(false)
   }
 
   return (
     <div className={styles.container}>
       <h3>Cart</h3>
-
       <Box
         sx={{ flexGrow: 1, marginTop: "30px", marginLeft: "20px" }}
         align="center"
@@ -41,15 +45,26 @@ function Cart() {
           </Grid>
         </Grid>
       </Box>
-
-      <Button
-        size="large"
-        color="primary"
-        variant="contained"
-        onClick={handleCheckout}
+      <Snackbar
+        open={isCheckedout}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        onClose={handleSnackbarClose}
       >
-        Checkout!
-      </Button>
+        <Alert severity="success">
+          Checkout Complete! - you're item(s) will never arive :)
+        </Alert>
+      </Snackbar>
+      {!!items.length && (
+        <Button
+          size="large"
+          color="primary"
+          variant="contained"
+          onClick={handleCheckout}
+        >
+          Checkout!
+        </Button>
+      )}
     </div>
   )
 }
