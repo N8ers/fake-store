@@ -9,16 +9,17 @@ const SEARCH_ACTION_TYPES = {
   SET_TERM: "search/SEARCH_TERM",
 }
 
-export function searchReducer(
-  state = { searchTerm: "", searchResults: [] },
-  action
-) {
-  switch (action.type) {
+const initialSearchState = { searchTerm: "", searchResults: [] }
+
+export function searchReducer(state = initialSearchState, action) {
+  const { type, payload } = action
+
+  switch (type) {
     case SEARCH_ACTION_TYPES.SET_TERM:
-      return { ...state, searchTerm: action.payload }
+      return { ...state, searchTerm: payload }
 
     case SEARCH_ACTION_TYPES.SET_RESULTS:
-      return { ...state, searchResults: action.payload }
+      return { ...state, searchResults: payload }
 
     default:
       return state
