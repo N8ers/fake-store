@@ -10,6 +10,7 @@ import NavBar from "./components/UI/NavBar/NavBar"
 
 import Home from "./pages/Home/Home"
 import UserSettings from "./pages/UserSettings/UserSettings"
+import Cart from "./pages/Cart/Cart"
 
 function App() {
   const dispatch = useDispatch()
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/settings" element={<UserSettings />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </div>
   )

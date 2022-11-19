@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import {
   AppBar,
   Box,
@@ -30,6 +31,7 @@ import {
 } from "../../../firebase/firebaseHelpers"
 
 function NavBar() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const firstName = useSelector((state) => state.user.firstName)
@@ -78,6 +80,8 @@ function NavBar() {
                 variant="h6"
                 component="div"
                 sx={{ flexGrow: 1, mt: "10px" }}
+                onClick={() => navigate("/")}
+                style={{ cursor: "pointer" }}
               >
                 Fake Shop
               </Typography>
@@ -116,7 +120,11 @@ function NavBar() {
                     <Forest />
                     Seed DB
                   </Button>
-                  <IconButton size="large" color="inherit">
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    onClick={() => navigate("/cart")}
+                  >
                     <ShoppingCartCheckout />
                   </IconButton>
                   <IconButton
