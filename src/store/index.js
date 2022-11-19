@@ -9,6 +9,7 @@ import {
   addItemToCart,
   clearCart,
   removeItemFromCart,
+  updateCartQuantity,
 } from "../firebase/firebaseHelpers"
 import { auth } from "../firebase/firebaseHelpers"
 import { rootReducer } from "./rootReducer"
@@ -131,6 +132,30 @@ export const removeItemFromCartThunk = (name) => async (dispatch, getState) => {
 
   dispatch({ type: "general/SET_IS_LOADING", payload: false })
 }
+
+export const updateCartQuantityThunk =
+  (name, quantity) => async (dispatch, getState) => {
+    dispatch({ type: "general/SET_IS_LOADING", payload: true })
+
+    const state = getState()
+    const cartDocumentId = state.user.cartDocumentId
+
+    const updatedCart = await updateCartQuantity(name, quantity, cartDocumentId)
+
+    const cartTotal = updatedCart.items.reduce(
+      (accumulator, cartItem) =>
+        accumulator + cartItem.quantity * cartItem.price,
+      0
+    )
+    const cartPayload = {
+      cartTotal,
+      items: updatedCart.items,
+    }
+
+    dispatch({ type: "cart/SET_CART", payload: cartPayload })
+
+    dispatch({ type: "general/SET_IS_LOADING", payload: false })
+  }
 
 const store = createStore(
   rootReducer,

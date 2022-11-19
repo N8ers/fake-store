@@ -116,6 +116,26 @@ export const clearCart = async (cartDocumentId) => {
   })
 }
 
+export const updateCartQuantity = async (name, quantity, cartDocumentId) => {
+  const cartDocRef = doc(db, "carts", cartDocumentId)
+  const currentCartSnapshot = await getDoc(cartDocRef)
+  const currentCartData = currentCartSnapshot.data()
+
+  let dataToUpdate = currentCartData.items.map((item) => {
+    if (item.name === name) {
+      item.quantity = quantity
+    }
+    return item
+  })
+
+  await updateDoc(cartDocRef, {
+    items: dataToUpdate,
+  })
+
+  const updatedCartSnapshot = await getDoc(cartDocRef)
+  return updatedCartSnapshot.data()
+}
+
 export const addItemToCart = async (payload, cartDocumentId) => {
   // get existing data
   const cartDocRef = doc(db, "carts", cartDocumentId)

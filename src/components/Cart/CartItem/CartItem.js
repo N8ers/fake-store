@@ -1,18 +1,23 @@
-import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { Card, Box, Grid, IconButton, Select, MenuItem } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 
-import { removeItemFromCartThunk } from "../../../store/index"
+import {
+  removeItemFromCartThunk,
+  updateCartQuantityThunk,
+} from "../../../store/index"
 
 function CartTotal({ name, quantity, price }) {
   const dispatch = useDispatch()
-  const [formQuantity, setFormQuantity] = useState(quantity)
 
   const formOptions = [1, 2, 3, 4, 5, 6, 7, 8]
 
   const removeItem = () => {
     dispatch(removeItemFromCartThunk(name))
+  }
+
+  const updateQuantity = (e) => {
+    dispatch(updateCartQuantityThunk(name, e.target.value))
   }
 
   return (
@@ -21,11 +26,7 @@ function CartTotal({ name, quantity, price }) {
         <Grid container spacing={2}>
           <Grid item>{name}</Grid>
           <Grid item>
-            <Select
-              value={formQuantity}
-              label="quantity"
-              onChange={(value) => setFormQuantity(value)}
-            >
+            <Select value={quantity} label="quantity" onChange={updateQuantity}>
               {formOptions.map((item) => (
                 <MenuItem key={item} value={item}>
                   {item}
@@ -34,11 +35,17 @@ function CartTotal({ name, quantity, price }) {
             </Select>
           </Grid>
           <Grid item>
+            {price.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+            x {quantity} =
             {(quantity * price).toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
             })}
           </Grid>
+
           <Grid item>
             <IconButton color="primary" sx={{ p: "10px" }} onClick={removeItem}>
               <Delete />
