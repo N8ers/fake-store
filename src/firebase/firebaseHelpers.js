@@ -94,18 +94,37 @@ export const getUserData = async (uid) => {
   return userSnapshot.data()
 }
 
+// export const removeItemFromCart = async (payload, cartDocumentId) => {
+//   console.log('hi')
+// }
+
+export const clearCart = async (cartDocumentId) => {
+  const cartDocRef = doc(db, "carts", cartDocumentId)
+  await updateDoc(cartDocRef, {
+    items: [],
+  })
+}
+
 export const addItemToCart = async (payload, cartDocumentId) => {
   // get existing data
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const currentCartSnapshot = await getDoc(cartDocRef)
   const currentCartData = currentCartSnapshot.data()
 
-  const dataToUpdate = currentCartData.items.map((item) => {
+  // update item if it exists
+  let added = false
+  let dataToUpdate = currentCartData.items.map((item) => {
     if (item.name === payload.name) {
+      added = true
       item.quantity = payload.quantity
     }
     return item
   })
+
+  // if item doesn't exist
+  if (!added) {
+    dataToUpdate = [payload, ...dataToUpdate]
+  }
 
   await updateDoc(cartDocRef, {
     items: dataToUpdate,
