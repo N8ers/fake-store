@@ -99,7 +99,6 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   }
 
   const { displayName, email, uid } = userAuth
-  // dispatch({ type: "user/SET_USER", payload: {displayName, email, uid} })
 
   return { displayName, email, uid }
 }
