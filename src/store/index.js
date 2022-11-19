@@ -13,6 +13,7 @@ export const fetchTheData = () => async (dispatch, getState) => {
 }
 
 export const checkAuthOnLoad = () => async (dispatch, getState) => {
+  dispatch({ type: "general/SET_IS_LOADING", payload: true })
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const payload = {
@@ -22,6 +23,7 @@ export const checkAuthOnLoad = () => async (dispatch, getState) => {
       }
       dispatch({ type: "user/SET_USER", payload })
     }
+    dispatch({ type: "general/SET_IS_LOADING", payload: false })
     return user
   })
 }

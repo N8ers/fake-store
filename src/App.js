@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+
+import { CircularProgress, Backdrop } from "@mui/material"
 
 import { checkAuthOnLoad } from "./store"
 
@@ -12,6 +14,8 @@ import UserSettings from "./pages/UserSettings/UserSettings"
 function App() {
   const dispatch = useDispatch()
 
+  const isLoading = useSelector((state) => state.general.isLoading)
+
   useEffect(() => {
     dispatch(checkAuthOnLoad())
   }, [])
@@ -19,6 +23,10 @@ function App() {
   return (
     <div>
       <NavBar />
+
+      <Backdrop open={isLoading}>
+        <CircularProgress />
+      </Backdrop>
 
       <Routes>
         <Route path="/" element={<Home />} />
