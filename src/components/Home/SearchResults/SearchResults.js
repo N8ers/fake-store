@@ -7,8 +7,7 @@ import styles from "./SearchResults.module.css"
 
 function SearchResults() {
   const searchTerm = useSelector((state) => state.search.searchTerm)
-
-  const results = [1, 2, 3, 4, 5, 6]
+  const searchResults = useSelector((state) => state.search.searchResults)
 
   return (
     <div className={styles.container}>
@@ -16,10 +15,23 @@ function SearchResults() {
 
       <Box sx={{ flexGrow: 1 }} align="center">
         <Grid container spacing={5}>
-          {results.map((result) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} align="center" key={result}>
+          {searchResults.hardcandy.map((result) => (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              align="center"
+              key={result.id}
+            >
               <Box>
-                <SearchResult />
+                <SearchResult
+                  id={result.id}
+                  imageUrl={result.imageUrl}
+                  name={result.name}
+                  price={result.price}
+                />
               </Box>
             </Grid>
           ))}

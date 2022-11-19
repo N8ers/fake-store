@@ -7,6 +7,7 @@ import {
   query,
   getDocs,
   addDoc,
+  arrayUnion,
   updateDoc,
   getDoc,
 } from "firebase/firestore"
@@ -93,6 +94,27 @@ export const getUserData = async (uid) => {
   return userSnapshot.data()
 }
 
+export const addItemToCart = async (payload, cartDocumentId) => {
+  // get existing data
+  const cartDocRef = doc(db, "carts", cartDocumentId)
+  const currentCartSnapshot = await getDoc(cartDocRef)
+  const currentCartData = currentCartSnapshot.data()
+
+  const dataToUpdate = currentCartData.items.map((item) => {
+    if (item.name === payload.name) {
+      item.quantity = payload.quantity
+    }
+    return item
+  })
+
+  await updateDoc(cartDocRef, {
+    items: dataToUpdate,
+  })
+
+  const updatedCartSnapshot = await getDoc(cartDocRef)
+  return updatedCartSnapshot.data()
+}
+
 export const createUserDocumentFromAuth = async (userAuth) => {
   // GET if user exists or CREATE and GET user
   const userDocRef = doc(db, "users", userAuth.uid)
@@ -130,9 +152,6 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     } catch (error) {
       console.log("error creating cart: ", error)
     }
-
-    console.log("newCart ", newCart)
-    console.log("newCart nest ", newCart._key.path.segments[1])
 
     // ADD CART ID TO USER
     try {
