@@ -4,9 +4,7 @@ const CART_ACTION_TYPES = {
 
 const initialCartState = {
   cartTotal: 0,
-  items: [
-    // id, quantity, name, description, price
-  ],
+  items: [],
 }
 
 export function cartReducer(state = initialCartState, action) {
@@ -14,8 +12,7 @@ export function cartReducer(state = initialCartState, action) {
 
   switch (type) {
     case CART_ACTION_TYPES.SET_CART:
-      const calculateCartTotal = 0
-      return { ...state, cartTotal: calculateCartTotal, items: payload.items }
+      return { ...state, ...payload }
 
     default:
       return state
