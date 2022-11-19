@@ -6,6 +6,8 @@ import {
   writeBatch,
   query,
   getDocs,
+  addDoc,
+  updateDoc,
   getDoc,
 } from "firebase/firestore"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
@@ -92,6 +94,36 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         displayName,
         email,
         createdAt,
+        cartDocumentId: null,
+      })
+    } catch (error) {
+      console.log("error creating user: ", error)
+    }
+
+    // CREATE CART
+    const docData = {
+      userUid: userAuth.uid,
+      items: [
+        // itemId
+        // itemQuantity
+      ],
+    }
+
+    let newCart
+
+    try {
+      newCart = await addDoc(collection(db, "carts"), docData)
+    } catch (error) {
+      console.log("error creating cart: ", error)
+    }
+
+    console.log("newCart ", newCart)
+    console.log("newCart nest ", newCart._key.path.segments[1])
+
+    // ADD CART ID TO USER
+    try {
+      await updateDoc(userDocRef, {
+        cartDocumentId: newCart._key.path.segments[1],
       })
     } catch (error) {
       console.log("error creating user: ", error)
