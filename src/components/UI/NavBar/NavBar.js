@@ -83,7 +83,7 @@ function NavBar() {
                 onClick={() => navigate("/")}
                 style={{ cursor: "pointer" }}
               >
-                Fake Shop
+                Fake Store
               </Typography>
             </Grid>
 
