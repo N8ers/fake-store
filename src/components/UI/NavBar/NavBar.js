@@ -5,6 +5,7 @@ import {
   AppBar,
   Box,
   Paper,
+  Badge,
   Toolbar,
   Typography,
   IconButton,
@@ -35,6 +36,7 @@ function NavBar() {
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const firstName = useSelector((state) => state.user.firstName)
+  const itemsInCart = useSelector((state) => state.cart.items.length)
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -125,7 +127,9 @@ function NavBar() {
                     color="inherit"
                     onClick={() => navigate("/cart")}
                   >
-                    <ShoppingCartCheckout />
+                    <Badge badgeContent={itemsInCart} color="warning">
+                      <ShoppingCartCheckout />
+                    </Badge>
                   </IconButton>
                   <IconButton
                     size="large"
