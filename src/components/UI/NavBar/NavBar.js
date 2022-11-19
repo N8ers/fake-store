@@ -40,6 +40,7 @@ function NavBar() {
 
   const handleSearch = (e) => {
     e.preventDefault()
+    navigate("/")
     dispatch({ type: "search/SEARCH_TERM", payload: search })
   }
 
