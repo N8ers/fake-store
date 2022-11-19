@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import {
   AppBar,
   Box,
   Paper,
+  Badge,
   Toolbar,
   Typography,
   IconButton,
@@ -30,12 +32,15 @@ import {
 } from "../../../firebase/firebaseHelpers"
 
 function NavBar() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const firstName = useSelector((state) => state.user.firstName)
+  const itemsInCart = useSelector((state) => state.cart.items.length)
 
   const handleSearch = (e) => {
     e.preventDefault()
+    navigate("/")
     dispatch({ type: "search/SEARCH_TERM", payload: search })
   }
 
@@ -78,8 +83,10 @@ function NavBar() {
                 variant="h6"
                 component="div"
                 sx={{ flexGrow: 1, mt: "10px" }}
+                onClick={() => navigate("/")}
+                style={{ cursor: "pointer" }}
               >
-                Fake Shop
+                Fake Store
               </Typography>
             </Grid>
 
@@ -116,8 +123,14 @@ function NavBar() {
                     <Forest />
                     Seed DB
                   </Button>
-                  <IconButton size="large" color="inherit">
-                    <ShoppingCartCheckout />
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    onClick={() => navigate("/cart")}
+                  >
+                    <Badge badgeContent={itemsInCart} color="warning">
+                      <ShoppingCartCheckout />
+                    </Badge>
                   </IconButton>
                   <IconButton
                     size="large"

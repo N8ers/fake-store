@@ -3,23 +3,23 @@ const USER_ACTION_TYPES = {
   CLEAR_USER: "user/CLEAR_USER",
 }
 
-const initUserState = {
+const initialUserState = {
   isLoggedIn: false,
   displayName: "",
+  cartDocumentId: "",
   firstName: "",
   email: "",
   uid: "",
 }
 
-export function userReducer(state = initUserState, action) {
+export function userReducer(state = initialUserState, action) {
   const { type, payload } = action
 
   switch (type) {
     case USER_ACTION_TYPES.SET_USER:
-      const firstName = payload.displayName.split(" ")[0]
-      return { ...state, isLoggedIn: true, firstName, ...payload }
+      return { ...state, ...payload }
     case USER_ACTION_TYPES.CLEAR_USER:
-      return { ...initUserState }
+      return { ...initialUserState }
 
     default:
       return state

@@ -14,6 +14,36 @@ export const SHOP_DATA = [
         imageUrl: "",
         price: 4,
       },
+      {
+        id: 12,
+        name: "root beer",
+        imageUrl: "",
+        price: 4,
+      },
+      {
+        id: 13,
+        name: "strawberry",
+        imageUrl: "",
+        price: 1.5,
+      },
+      {
+        id: 14,
+        name: "lemon",
+        imageUrl: "",
+        price: 2,
+      },
+      {
+        id: 15,
+        name: "watermellon",
+        imageUrl: "",
+        price: 1.5,
+      },
+      {
+        id: 16,
+        name: "blue",
+        imageUrl: "",
+        price: 3,
+      },
     ],
   },
 ]
