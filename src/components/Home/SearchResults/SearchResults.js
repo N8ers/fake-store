@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Box, Grid } from "@mui/material"
 
@@ -9,13 +10,22 @@ function SearchResults() {
   const searchTerm = useSelector((state) => state.search.searchTerm)
   const searchResults = useSelector((state) => state.search.searchResults)
 
+  const [filteredResults, setFilteredResults] = useState([])
+
+  useEffect(() => {
+    const result = searchResults.hardcandy.filter((item) =>
+      item.name.includes(searchTerm)
+    )
+    setFilteredResults(result)
+  }, [searchResults, searchTerm])
+
   return (
     <div className={styles.container}>
       <h3>Results For: "{searchTerm}"</h3>
 
       <Box sx={{ flexGrow: 1 }} align="center">
         <Grid container spacing={5}>
-          {searchResults.hardcandy.map((result) => (
+          {filteredResults.map((result) => (
             <Grid
               item
               xs={12}
