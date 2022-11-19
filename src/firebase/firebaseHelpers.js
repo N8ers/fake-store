@@ -94,9 +94,20 @@ export const getUserData = async (uid) => {
   return userSnapshot.data()
 }
 
-// export const removeItemFromCart = async (payload, cartDocumentId) => {
-//   console.log('hi')
-// }
+export const removeItemFromCart = async (name, cartDocumentId) => {
+  const cartDocRef = doc(db, "carts", cartDocumentId)
+  const currentCartSnapshot = await getDoc(cartDocRef)
+  const currentCartData = currentCartSnapshot.data()
+
+  const updatedData = currentCartData.items.filter((item) => item.name !== name)
+
+  await updateDoc(cartDocRef, {
+    items: updatedData,
+  })
+
+  const updatedCartSnapshot = await getDoc(cartDocRef)
+  return updatedCartSnapshot.data()
+}
 
 export const clearCart = async (cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)

@@ -8,6 +8,7 @@ import {
   getUserData,
   addItemToCart,
   clearCart,
+  removeItemFromCart,
 } from "../firebase/firebaseHelpers"
 import { auth } from "../firebase/firebaseHelpers"
 import { rootReducer } from "./rootReducer"
@@ -105,6 +106,26 @@ export const checkout = () => async (dispatch, getState) => {
   const cartPayload = {
     cartTotal: 0,
     items: [],
+  }
+  dispatch({ type: "cart/SET_CART", payload: cartPayload })
+
+  dispatch({ type: "general/SET_IS_LOADING", payload: false })
+}
+
+export const removeItemFromCartThunk = (name) => async (dispatch, getState) => {
+  dispatch({ type: "general/SET_IS_LOADING", payload: true })
+
+  const state = getState()
+  const cartDocumentId = state.user.cartDocumentId
+  const updatedData = await removeItemFromCart(name, cartDocumentId)
+
+  const cartTotal = updatedData.items.reduce(
+    (accumulator, cartItem) => accumulator + cartItem.quantity * cartItem.price,
+    0
+  )
+  const cartPayload = {
+    cartTotal,
+    items: updatedData.items,
   }
   dispatch({ type: "cart/SET_CART", payload: cartPayload })
 

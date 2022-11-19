@@ -1,11 +1,19 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { Card, Box, Grid, IconButton, Select, MenuItem } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 
+import { removeItemFromCartThunk } from "../../../store/index"
+
 function CartTotal({ name, quantity, price }) {
+  const dispatch = useDispatch()
   const [formQuantity, setFormQuantity] = useState(quantity)
 
   const formOptions = [1, 2, 3, 4, 5, 6, 7, 8]
+
+  const removeItem = () => {
+    dispatch(removeItemFromCartThunk(name))
+  }
 
   return (
     <Box sx={{ margin: "20px" }}>
@@ -32,7 +40,7 @@ function CartTotal({ name, quantity, price }) {
             })}
           </Grid>
           <Grid item>
-            <IconButton color="primary" sx={{ p: "10px" }}>
+            <IconButton color="primary" sx={{ p: "10px" }} onClick={removeItem}>
               <Delete />
             </IconButton>
           </Grid>
