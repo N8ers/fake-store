@@ -13,10 +13,12 @@ function Search() {
   const [filteredResults, setFilteredResults] = useState([])
 
   useEffect(() => {
-    const result = searchResults.hardcandy.filter((item) =>
-      item.name.includes(searchTerm)
-    )
-    setFilteredResults(result)
+    if (searchResults.hardcandy) {
+      const result = searchResults.hardcandy.filter((item) =>
+        item.name.includes(searchTerm)
+      )
+      setFilteredResults(result)
+    }
   }, [searchResults, searchTerm])
 
   return (
