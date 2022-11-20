@@ -2,11 +2,11 @@ import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Box, Grid } from "@mui/material"
 
-import SearchResult from "../SearchResult/SearchResult"
+import SearchResult from "../../components/Search/SearchResult/SearchResult"
 
-import styles from "./SearchResults.module.css"
+import styles from "./Search.module.css"
 
-function SearchResults() {
+function Search() {
   const searchTerm = useSelector((state) => state.search.searchTerm)
   const searchResults = useSelector((state) => state.search.searchResults)
 
@@ -51,4 +51,4 @@ function SearchResults() {
   )
 }
 
-export default SearchResults
+export default Search

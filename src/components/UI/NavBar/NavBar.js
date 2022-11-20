@@ -21,14 +21,14 @@ import {
   AccountCircle,
   ShoppingCartCheckout,
   Search,
-  Forest,
+  // Forest,
 } from "@mui/icons-material"
 
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
   logUserOutGoogle,
-  seedDB,
+  // seedDB,
 } from "../../../firebase/firebaseHelpers"
 
 function NavBar() {
@@ -40,7 +40,7 @@ function NavBar() {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    navigate("/")
+    navigate("/search")
     dispatch({ type: "search/SEARCH_TERM", payload: search })
   }
 
@@ -109,9 +109,10 @@ function NavBar() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <IconButton color="primary" sx={{ p: "10px" }} type="submit">
-                  <Search />
-                </IconButton>
+
+                <Button endIcon={<Search />} type="submit">
+                  Search
+                </Button>
               </Paper>
             </Grid>
 
@@ -119,10 +120,10 @@ function NavBar() {
               {isLoggedIn ? (
                 <>
                   <span>Hi, {firstName}</span>
-                  <Button size="large" color="inherit" onClick={seedDB}>
+                  {/* <Button size="large" color="inherit" onClick={seedDB}>
                     <Forest />
                     Seed DB
-                  </Button>
+                  </Button> */}
                   <IconButton
                     size="large"
                     color="inherit"
@@ -140,11 +141,12 @@ function NavBar() {
                     <AccountCircle />
                   </IconButton>
                   <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>Settings</MenuItem>
-                    <Divider />
-                    <MenuItem onClick={handleClose}>My orders</MenuItem>
-                    <MenuItem onClick={handleClose}>Wishlist</MenuItem>
+                    {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+                    {/* <MenuItem onClick={handleClose}>Settings</MenuItem> */}
+                    {/* <Divider /> */}
+                    {/* <MenuItem onClick={handleClose}>My orders</MenuItem> */}
+                    {/* <MenuItem onClick={handleClose}>Wishlist</MenuItem> */}
+                    <MenuItem onClick={() => navigate("/cart")}>Cart</MenuItem>
                     <Divider />
                     <MenuItem onClick={logUserOut}>Logout</MenuItem>
                   </Menu>{" "}
