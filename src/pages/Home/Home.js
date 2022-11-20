@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 
 import { fetchTheData } from "../../store"
 
-import DefaultHome from "../../components/Home/DefaultHome/DefaultHome"
+import Ads from "../../components/Home/Ads/Ads"
 
 function Home() {
   const dispatch = useDispatch()
@@ -14,7 +14,7 @@ function Home() {
 
   return (
     <div>
-      <DefaultHome />
+      <Ads />
     </div>
   )
 }
