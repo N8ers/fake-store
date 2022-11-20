@@ -1,6 +1,6 @@
 import { Box, Grid, Skeleton } from "@mui/material"
 
-import styles from "./DefaultHome.module.css"
+import styles from "./Ads.module.css"
 
 function DefaultHome() {
   return (

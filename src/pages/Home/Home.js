@@ -1,15 +1,11 @@
 import { useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { fetchTheData } from "../../store"
 
-import DefaultHome from "../../components/Home/DefaultHome/DefaultHome"
-import SearchResults from "../../components/Home/SearchResults/SearchResults"
-
-// import styles from "./Home.module.css"
+import Ads from "../../components/Home/Ads/Ads"
 
 function Home() {
-  const searchTerm = useSelector((state) => state.search.searchTerm)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -18,7 +14,7 @@ function Home() {
 
   return (
     <div>
-      <div>{searchTerm.length ? <SearchResults /> : <DefaultHome />}</div>
+      <Ads />
     </div>
   )
 }
