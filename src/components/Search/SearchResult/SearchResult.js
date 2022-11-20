@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import { addToCart } from "../../../store/index"
 
 function SearchResult({ id, imageUrl, name, price }) {
   const dispatch = useDispatch()
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
 
   const [quantity, setQuantity] = useState(0)
   const formOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -36,18 +37,22 @@ function SearchResult({ id, imageUrl, name, price }) {
           ${price}
         </Typography>
 
-        <Select
-          value={quantity}
-          label="quantity"
-          onChange={(e) => setQuantity(e.target.value)}
-        >
-          {formOptions.map((item) => (
-            <MenuItem key={item} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-        <Button onClick={addItemToCart}>Add to Cart!</Button>
+        {isLoggedIn && (
+          <>
+            <Select
+              value={quantity}
+              label="quantity"
+              onChange={(e) => setQuantity(e.target.value)}
+            >
+              {formOptions.map((item) => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+            <Button onClick={addItemToCart}>Add to Cart!</Button>
+          </>
+        )}
       </CardContent>
     </Card>
   )
