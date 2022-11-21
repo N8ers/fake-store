@@ -4,6 +4,13 @@
   padding: 20px;
 }
 
+.banner {
+  height: 125px;
+  padding: 20px;
+  text-align: left;
+  background-color: white;
+}
+
 .box {
   height: 200px;
   padding: 20px;
