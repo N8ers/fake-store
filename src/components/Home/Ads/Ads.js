@@ -1,6 +1,33 @@
-import { Box, Grid, Skeleton } from "@mui/material"
+import {
+  Box,
+  Grid,
+  Skeleton,
+  ImageListItem,
+  ImageListItemBar,
+  IconButton,
+} from "@mui/material"
+
+import { Info } from "@mui/icons-material"
 
 import styles from "./Ads.module.css"
+
+const LargeImg1 = (
+  <ImageListItem sx={{ width: 200 }}>
+    <img src="/cartoon-candy.png" alt="" />
+    <ImageListItemBar
+      title="hey"
+      subtitle="hi"
+      actionIcon={
+        <IconButton
+          sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+          aria-label={`info about ___`}
+        >
+          <Info />
+        </IconButton>
+      }
+    />
+  </ImageListItem>
+)
 
 function DefaultHome() {
   return (
@@ -65,9 +92,11 @@ function DefaultHome() {
           <Box className={styles.box}>
             <p>More items to explore</p>
             <Box sx={{ width: 750 }}>
-              <Skeleton />
+              {/* <Skeleton />
               <Skeleton animation="wave" />
-              <Skeleton animation={false} />
+              <Skeleton animation={false} /> */}
+
+              {LargeImg1}
             </Box>
           </Box>
         </Grid>
