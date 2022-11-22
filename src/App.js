@@ -13,6 +13,8 @@ import UserSettings from "./pages/UserSettings/UserSettings"
 import Cart from "./pages/Cart/Cart"
 import Search from "./pages/Search/Search"
 
+import styles from "./App.module.css"
+
 function App() {
   const dispatch = useDispatch()
 
@@ -32,7 +34,7 @@ function App() {
   }, [dispatch])
 
   return (
-    <div>
+    <div className={styles.container}>
       <NavBar />
 
       <Backdrop open={isLoading}>
