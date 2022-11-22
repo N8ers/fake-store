@@ -75,13 +75,21 @@ function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar>
+      <AppBar
+        elevation={0}
+        style={{
+          backgroundColor: "#e4f3f7",
+          color: "#7a85c1",
+          borderBottom: "5px solid #7a85c1",
+        }}
+      >
         <Toolbar>
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography
                 variant="h6"
                 component="div"
+                fontWeight="800"
                 sx={{ flexGrow: 1, mt: "10px" }}
                 onClick={() => navigate("/")}
                 style={{ cursor: "pointer" }}
@@ -110,7 +118,11 @@ function NavBar() {
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 
-                <Button endIcon={<Search />} type="submit">
+                <Button
+                  endIcon={<Search />}
+                  type="submit"
+                  sx={{ color: "#7a85c1" }}
+                >
                   Search
                 </Button>
               </Paper>
