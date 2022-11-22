@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
-import { CircularProgress, Backdrop } from "@mui/material"
+import { CircularProgress, Backdrop, Toolbar } from "@mui/material"
 
 import { checkAuthOnLoad, loadUserData, fetchTheData } from "./store"
 
@@ -36,6 +36,7 @@ function App() {
   return (
     <div className={styles.container}>
       <NavBar />
+      <Toolbar />
 
       <Backdrop open={isLoading}>
         <CircularProgress />

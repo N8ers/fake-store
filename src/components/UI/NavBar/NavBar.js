@@ -75,7 +75,7 @@ function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar>
         <Toolbar>
           <Grid container spacing={2}>
             <Grid item xs={4}>
