@@ -1,6 +1,7 @@
 .container {
   background-image: url(../public/background.png);
   background-color: #f6cbe7;
+  min-height: 100vh;
   background-position: right bottom;
   background-repeat: no-repeat;
   background-attachment: fixed;
