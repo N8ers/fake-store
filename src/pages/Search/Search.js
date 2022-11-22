@@ -11,6 +11,7 @@ function Search() {
   const searchResults = useSelector((state) => state.search.searchResults)
 
   const [filteredResults, setFilteredResults] = useState([])
+  const [resultsMessage, setResultsMessage] = useState("")
 
   useEffect(() => {
     if (searchResults.hardcandy) {
@@ -21,9 +22,22 @@ function Search() {
     }
   }, [searchResults, searchTerm])
 
+  useEffect(() => {
+    let message = `Sorry, no results were found for: "${searchTerm}"`
+    if (!!filteredResults.length) {
+      if (searchTerm.length) {
+        message = `Results For: "${searchTerm}"`
+      } else {
+        message = ""
+      }
+    }
+
+    setResultsMessage(message)
+  }, [filteredResults, searchTerm])
+
   return (
     <div className={styles.container}>
-      <h3>Results For: "{searchTerm}"</h3>
+      <h3>{resultsMessage}</h3>
 
       <Box sx={{ flexGrow: 1 }} align="center">
         <Grid container spacing={5}>
