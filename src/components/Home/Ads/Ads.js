@@ -12,7 +12,7 @@ import { Info } from "@mui/icons-material"
 import styles from "./Ads.module.css"
 
 const LargeImg1 = (
-  <ImageListItem sx={{ width: 200 }}>
+  <ImageListItem sx={{ width: 175 }}>
     <img src="/cartoon-candy.png" alt="" />
     <ImageListItemBar
       title="hey"
@@ -96,7 +96,12 @@ function DefaultHome() {
               <Skeleton animation="wave" />
               <Skeleton animation={false} /> */}
 
-              {LargeImg1}
+              <Grid container spacing={2}>
+                <Grid item>{LargeImg1}</Grid>
+                <Grid item>{LargeImg1}</Grid>
+                <Grid item>{LargeImg1}</Grid>
+                <Grid item>{LargeImg1}</Grid>
+              </Grid>
             </Box>
           </Box>
         </Grid>
