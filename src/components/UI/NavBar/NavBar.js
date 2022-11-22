@@ -78,9 +78,9 @@ function NavBar() {
       <AppBar
         elevation={0}
         style={{
-          backgroundColor: "#e4f3f7",
-          color: "#7a85c1",
-          borderBottom: "5px solid #7a85c1",
+          color: "#e4f3f7",
+          backgroundColor: "#7a85c1",
+          borderBottom: "5px solid #5d6595",
         }}
       >
         <Toolbar>
