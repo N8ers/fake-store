@@ -7,6 +7,8 @@ import {
   Button,
   Select,
   Dialog,
+  Snackbar,
+  Alert,
   DialogTitle,
   MenuItem,
   Typography,
@@ -21,9 +23,14 @@ function SearchResult({ id, imageUrl, name, price }) {
 
   const [addToCartDialog, setAddToCartDialog] = useState(false)
   const [quantityOfItemInCart, setQuantityOfItemInCart] = useState(0)
+  const [isAddedToCart, setIsAddedToCart] = useState(false)
 
   const [quantity, setQuantity] = useState(0)
   const formOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+  const handleSnackbarClose = () => {
+    setIsAddedToCart(false)
+  }
 
   useEffect(() => {
     const cartItem = cartItems.filter((item) => item.name === name)[0]
@@ -35,6 +42,7 @@ function SearchResult({ id, imageUrl, name, price }) {
 
   const updateCartItem = () => {
     dispatch(addToCart({ name, price, quantity }))
+    setIsAddedToCart(true)
     setAddToCartDialog(false)
   }
 
@@ -43,11 +51,8 @@ function SearchResult({ id, imageUrl, name, price }) {
       setAddToCartDialog(true)
     } else {
       dispatch(addToCart({ name, price, quantity }))
+      setIsAddedToCart(true)
     }
-
-    /**
-     * Also show success toast when added to cart
-     */
   }
 
   return (
@@ -97,6 +102,17 @@ function SearchResult({ id, imageUrl, name, price }) {
         <Button onClick={() => setAddToCartDialog(false)}>No</Button>
         <Button onClick={updateCartItem}>Yes</Button>
       </Dialog>
+
+      <Snackbar
+        open={isAddedToCart}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        onClose={handleSnackbarClose}
+      >
+        <Alert severity="success">
+          Added {quantity} {name} to your cart
+        </Alert>
+      </Snackbar>
     </Card>
   )
 }
