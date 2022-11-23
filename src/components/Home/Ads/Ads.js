@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import {
   Box,
   Grid,
@@ -30,6 +31,34 @@ const LargeImg1 = (
 )
 
 function DefaultHome() {
+  const [isBox1Loading, setIsBox1Loading] = useState(true)
+  const [isBox2Loading, setIsBox2Loading] = useState(true)
+  const [isBox3Loading, setIsBox3Loading] = useState(true)
+  const [isBox4Loading, setIsBox4Loading] = useState(true)
+  const [isBox5Loading, setIsBox5Loading] = useState(true)
+
+  const randomSecond = () => {
+    return Math.floor(Math.random() * (1000 - 150) + 150)
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsBox1Loading(false)
+    }, randomSecond())
+    setTimeout(() => {
+      setIsBox2Loading(false)
+    }, randomSecond())
+    setTimeout(() => {
+      setIsBox3Loading(false)
+    }, randomSecond())
+    setTimeout(() => {
+      setIsBox4Loading(false)
+    }, randomSecond())
+    setTimeout(() => {
+      setIsBox5Loading(false)
+    }, randomSecond())
+  }, [])
+
   return (
     <Box sx={{ flexGrow: 1 }} align="center">
       <Grid container spacing={2} className={styles.container}>
@@ -52,9 +81,15 @@ function DefaultHome() {
               month long!
             </p>
             <Box sx={{ width: 750 }}>
-              <Skeleton />
-              <Skeleton animation="wave" />
-              <Skeleton animation={false} />
+              {isBox1Loading ? (
+                <>
+                  <Skeleton />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation={false} />
+                </>
+              ) : (
+                "Loaded"
+              )}
             </Box>
           </Box>
         </Grid>
@@ -62,9 +97,15 @@ function DefaultHome() {
           <Box className={styles.box}>
             <p>Recommeneded for you</p>
             <Box sx={{ width: 300 }}>
-              <Skeleton />
-              <Skeleton animation="wave" />
-              <Skeleton animation={false} />
+              {isBox2Loading ? (
+                <>
+                  <Skeleton />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation={false} />
+                </>
+              ) : (
+                "Loaded"
+              )}
             </Box>
           </Box>
         </Grid>
@@ -72,9 +113,15 @@ function DefaultHome() {
           <Box className={styles.box}>
             <p>keep shopping for</p>
             <Box sx={{ width: 150 }}>
-              <Skeleton />
-              <Skeleton animation="wave" />
-              <Skeleton animation={false} />
+              {isBox3Loading ? (
+                <>
+                  <Skeleton />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation={false} />
+                </>
+              ) : (
+                "Loaded"
+              )}
             </Box>
           </Box>
         </Grid>
@@ -82,9 +129,15 @@ function DefaultHome() {
           <Box className={styles.box}>
             <p>Early Purple Thursday deals</p>
             <Box sx={{ width: 150 }}>
-              <Skeleton />
-              <Skeleton animation="wave" />
-              <Skeleton animation={false} />
+              {isBox4Loading ? (
+                <>
+                  <Skeleton />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation={false} />
+                </>
+              ) : (
+                "Loaded"
+              )}
             </Box>
           </Box>
         </Grid>
@@ -92,16 +145,20 @@ function DefaultHome() {
           <Box className={styles.box}>
             <p>More items to explore</p>
             <Box sx={{ width: 750 }}>
-              {/* <Skeleton />
-              <Skeleton animation="wave" />
-              <Skeleton animation={false} /> */}
-
-              <Grid container spacing={2}>
-                <Grid item>{LargeImg1}</Grid>
-                <Grid item>{LargeImg1}</Grid>
-                <Grid item>{LargeImg1}</Grid>
-                <Grid item>{LargeImg1}</Grid>
-              </Grid>
+              {isBox5Loading ? (
+                <>
+                  <Skeleton />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation={false} />
+                </>
+              ) : (
+                <Grid container spacing={2}>
+                  <Grid item>{LargeImg1}</Grid>
+                  <Grid item>{LargeImg1}</Grid>
+                  <Grid item>{LargeImg1}</Grid>
+                  <Grid item>{LargeImg1}</Grid>
+                </Grid>
+              )}
             </Box>
           </Box>
         </Grid>
