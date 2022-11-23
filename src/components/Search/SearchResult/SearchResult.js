@@ -10,6 +10,9 @@ import {
   Snackbar,
   Alert,
   DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
   MenuItem,
   Typography,
 } from "@mui/material"
@@ -93,14 +96,21 @@ function SearchResult({ id, imageUrl, name, price }) {
 
       <Dialog open={addToCartDialog}>
         <DialogTitle>Item is already in cart</DialogTitle>
-        <p>
-          You already have {quantityOfItemInCart} of {name} in your cart.
-        </p>
-        <p>
-          Do you want to update your cart to have {quantity} of {name}?
-        </p>
-        <Button onClick={() => setAddToCartDialog(false)}>No</Button>
-        <Button onClick={updateCartItem}>Yes</Button>
+
+        <DialogContent>
+          <DialogContentText>
+            You already have <b>{quantityOfItemInCart}</b> <b>{name}</b> in your
+            cart.
+            <br />
+            Do you want to update your cart to have <b>{quantity}</b>{" "}
+            <b>{name}</b>?
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={() => setAddToCartDialog(false)}>No</Button>
+          <Button onClick={updateCartItem}>Yes</Button>
+        </DialogActions>
       </Dialog>
 
       <Snackbar
