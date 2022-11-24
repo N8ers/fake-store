@@ -30,7 +30,7 @@ function CartTotal({ name, quantity, price }) {
 
   return (
     <Box sx={{ margin: "20px" }}>
-      <Card sx={{ padding: "20px", width: "370px" }}>
+      <Card sx={{ padding: "20px", width: "330px" }}>
         <Grid container spacing={2}>
           <Grid item xs={10}>
             <Typography align="left" variant="h6">
