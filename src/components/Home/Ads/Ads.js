@@ -10,7 +10,9 @@ import {
   CardContent,
   Typography,
   Skeleton,
+  useMediaQuery,
 } from "@mui/material"
+import { useTheme } from "@mui/material/styles"
 
 import styles from "./Ads.module.css"
 
@@ -209,8 +211,19 @@ function DefaultHome() {
     </Box>
   )
 
+  const [topMargin, setTopMargin] = useState("60px")
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up("md"))
+  useEffect(() => {
+    if (matches) {
+      setTopMargin("0px")
+    } else {
+      setTopMargin("60px")
+    }
+  }, [matches])
+
   return (
-    <Box sx={{ flexGrow: 1 }} align="center">
+    <Box sx={{ flexGrow: 1, marginTop: topMargin }} align="center">
       <Grid container spacing={2} className={styles.container}>
         <Grid item xs={12} align="center">
           {banner}
