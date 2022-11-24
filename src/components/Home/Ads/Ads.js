@@ -80,7 +80,7 @@ function DefaultHome() {
   )
 
   const itemSmall = (
-    <Grid item sx={{ justifyContent: "center" }}>
+    <Grid item xs={6}>
       <Card>
         <CardActionArea onClick={handleClick}>
           <CardMedia component="img" height="50" image="/cartoon-candy.png" />
@@ -167,9 +167,9 @@ function DefaultHome() {
   )
 
   const adThree = (
-    <Box className={styles.box}>
-      <p>keep shopping for</p>
-      <Box sx={{ width: 150 }}>
+    <Box className={styles.boxThree}>
+      <p className={styles.boxThreeTitle}>Keep shopping for</p>
+      <Box>
         {isBox3Loading ? (
           <Grid container spacing={2}>
             {skeletonSmall}
@@ -190,9 +190,9 @@ function DefaultHome() {
   )
 
   const adFour = (
-    <Box className={styles.box}>
-      <p>Early Purple Thursday Deals</p>
-      <Box sx={{ width: 150 }}>
+    <Box className={styles.boxThree}>
+      <p className={styles.boxThreeTitle}>Early Purple Thursday Deals</p>
+      <Box>
         {isBox4Loading ? (
           <Grid container spacing={2}>
             {skeletonSmall}
