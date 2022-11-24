@@ -218,13 +218,13 @@ function DefaultHome() {
         <Grid item xs={12} align="center">
           {adOne}
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} md={6} align="center">
           {adTwo}
         </Grid>
-        <Grid item xs={3} align="center">
+        <Grid item xs={6} md={3} align="center">
           {adThree}
         </Grid>
-        <Grid item xs={3} align="center">
+        <Grid item xs={6} md={3} align="center">
           {adFour}
         </Grid>
       </Grid>
