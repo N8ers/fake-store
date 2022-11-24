@@ -61,7 +61,7 @@ function DefaultHome() {
   )
 
   const itemMedium = (
-    <Grid item sx={{ justifyContent: "center" }}>
+    <Grid item xs={6} sm={4} md={4}>
       <Card>
         <CardActionArea onClick={handleClick}>
           <CardMedia component="img" height="80" image="/cartoon-candy.png" />
@@ -142,7 +142,7 @@ function DefaultHome() {
   )
 
   const adTwo = (
-    <Box className={styles.box}>
+    <Box className={styles.boxOne}>
       <p>Recommeneded for you</p>
       <Box>
         {isBox2Loading ? (
