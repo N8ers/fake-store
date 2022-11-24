@@ -97,119 +97,139 @@ function DefaultHome() {
     </Grid>
   )
 
+  const banner = (
+    <Box className={styles.banner}>
+      <h2>Welcome to a real Fake Store</h2>
+      <p>
+        Have you ever wanted the electrifying buzz of ordering things online,
+        but don't want to actually pay? Then come visit the Real Fake Store,
+        it's really fake!!
+      </p>
+      {/* <p>Learn more about the Real Fake store on our About page.</p> */}
+    </Box>
+  )
+
+  const adOne = (
+    <Box className={styles.boxOne}>
+      <h2>Purple Thursday</h2>
+      <p>
+        Shop the hottest deals this Purple Thursday, now available all month
+        long!
+      </p>
+      <Box sx={{ width: 750 }}>
+        {isBox1Loading ? (
+          <Box>
+            <Grid container spacing={2}>
+              {skeletonMedium}
+              {skeletonMedium}
+              {skeletonMedium}
+              {skeletonMedium}
+              {skeletonMedium}
+            </Grid>
+          </Box>
+        ) : (
+          <Box>
+            <Grid container spacing={1}>
+              {itemLarge}
+              {itemLarge}
+              {itemLarge}
+              {itemLarge}
+              {itemLarge}
+            </Grid>
+          </Box>
+        )}
+      </Box>
+    </Box>
+  )
+
+  const adTwo = (
+    <Box className={styles.box}>
+      <p>Recommeneded for you</p>
+      <Box>
+        {isBox2Loading ? (
+          <Box>
+            <Grid container spacing={2}>
+              {skeletonMedium}
+              {skeletonMedium}
+              {skeletonMedium}
+            </Grid>
+          </Box>
+        ) : (
+          <Box>
+            <Grid container spacing={2}>
+              {itemMedium}
+              {itemMedium}
+              {itemMedium}
+            </Grid>
+          </Box>
+        )}
+      </Box>
+    </Box>
+  )
+
+  const adThree = (
+    <Box className={styles.box}>
+      <p>keep shopping for</p>
+      <Box sx={{ width: 150 }}>
+        {isBox3Loading ? (
+          <Grid container spacing={2}>
+            {skeletonSmall}
+            {skeletonSmall}
+            {skeletonSmall}
+            {skeletonSmall}
+          </Grid>
+        ) : (
+          <Grid container spacing={2}>
+            {itemSmall}
+            {itemSmall}
+            {itemSmall}
+            {itemSmall}
+          </Grid>
+        )}
+      </Box>
+    </Box>
+  )
+
+  const adFour = (
+    <Box className={styles.box}>
+      <p>Early Purple Thursday Deals</p>
+      <Box sx={{ width: 150 }}>
+        {isBox4Loading ? (
+          <Grid container spacing={2}>
+            {skeletonSmall}
+            {skeletonSmall}
+            {skeletonSmall}
+            {skeletonSmall}
+          </Grid>
+        ) : (
+          <Grid container spacing={2}>
+            {itemSmall}
+            {itemSmall}
+            {itemSmall}
+            {itemSmall}
+          </Grid>
+        )}
+      </Box>
+    </Box>
+  )
+
   return (
     <Box sx={{ flexGrow: 1 }} align="center">
       <Grid container spacing={2} className={styles.container}>
         <Grid item xs={12} align="center">
-          <Box className={styles.banner}>
-            <h2>Welcome to a real Fake Store</h2>
-            <p>
-              Have you ever wanted the electrifying buzz of ordering things
-              online, but don't want to actually pay? Then come visit the Real
-              Fake Store, it's really fake!!
-            </p>
-            {/* <p>Learn more about the Real Fake store on our About page.</p> */}
-          </Box>
+          {banner}
         </Grid>
         <Grid item xs={12} align="center">
-          <Box className={styles.boxOne}>
-            <h2>Purple Thursday</h2>
-            <p>
-              Shop the hottest deals this Purple Thursday, now available all
-              month long!
-            </p>
-            <Box sx={{ width: 750 }}>
-              {isBox1Loading ? (
-                <Box>
-                  <Grid container spacing={2}>
-                    {skeletonMedium}
-                    {skeletonMedium}
-                    {skeletonMedium}
-                    {skeletonMedium}
-                    {skeletonMedium}
-                  </Grid>
-                </Box>
-              ) : (
-                <Box>
-                  <Grid container spacing={1}>
-                    {itemLarge}
-                    {itemLarge}
-                    {itemLarge}
-                    {itemLarge}
-                    {itemLarge}
-                  </Grid>
-                </Box>
-              )}
-            </Box>
-          </Box>
+          {adOne}
         </Grid>
         <Grid item xs={6} align="center">
-          <Box className={styles.box}>
-            <p>Recommeneded for you</p>
-            <Box>
-              {isBox2Loading ? (
-                <Box>
-                  <Grid container spacing={2}>
-                    {skeletonMedium}
-                    {skeletonMedium}
-                    {skeletonMedium}
-                  </Grid>
-                </Box>
-              ) : (
-                <Box>
-                  <Grid container spacing={2}>
-                    {itemMedium}
-                    {itemMedium}
-                    {itemMedium}
-                  </Grid>
-                </Box>
-              )}
-            </Box>
-          </Box>
+          {adTwo}
         </Grid>
         <Grid item xs={3} align="center">
-          <Box className={styles.box}>
-            <p>keep shopping for</p>
-            <Box sx={{ width: 150 }}>
-              {isBox3Loading ? (
-                <Grid container spacing={2}>
-                  {skeletonSmall}
-                  {skeletonSmall}
-                  {skeletonSmall}
-                  {skeletonSmall}
-                </Grid>
-              ) : (
-                <Grid container spacing={2}>
-                  {itemSmall}
-                  {itemSmall}
-                  {itemSmall}
-                  {itemSmall}
-                </Grid>
-              )}
-            </Box>
-          </Box>
+          {adThree}
         </Grid>
         <Grid item xs={3} align="center">
-          <Box className={styles.box}>
-            <p>Early Purple Thursday Deals</p>
-            <Box sx={{ width: 150 }}>
-              {isBox4Loading ? (
-                <Grid container spacing={2}>
-                  {skeletonSmall}
-                  {skeletonSmall}
-                  {skeletonSmall}
-                  {skeletonSmall}
-                </Grid>
-              ) : (
-                <Grid container spacing={2}>
-                  {itemSmall}
-                  {itemSmall}
-                  {itemSmall}
-                  {itemSmall}
-                </Grid>
-              )}
-            </Box>
-          </Box>
+          {adFour}
         </Grid>
       </Grid>
     </Box>
