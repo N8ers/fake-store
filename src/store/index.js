@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
 import { onAuthStateChanged } from "firebase/auth"
-
+import { composeWithDevTools } from "@redux-devtools/extension"
 import {
   getFirebaseData,
   getUserCart,
@@ -157,6 +157,9 @@ export const updateCartQuantityThunk =
     dispatch({ type: "general/SET_IS_LOADING", payload: false })
   }
 
-const store = createStore(rootReducer, compose(applyMiddleware(thunk)))
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+)
 
 export default store
