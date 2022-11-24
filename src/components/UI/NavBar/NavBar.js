@@ -105,12 +105,12 @@ function NavBar() {
           p: "2px 4px",
           display: "flex",
           alignItems: "center",
-          width: 400,
+          maxWidth: "600px",
         }}
       >
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search The Real Fake Store!"
+          placeholder="root beer..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -127,7 +127,7 @@ function NavBar() {
     <>
       {isLoggedIn ? (
         <>
-          <span>Hi, {firstName}</span>
+          {isDesktopView && <span>Hi, {firstName}</span>}
           {/* <Button size="large" color="inherit" onClick={seedDB}>
                     <Forest />
                     Seed DB
@@ -170,15 +170,15 @@ function NavBar() {
 
   const desktopView = (
     <>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={3}>
         {titleSection}
       </Grid>
 
-      <Grid item xs={12} md={4} align="center">
+      <Grid item xs={12} md={6} align="center">
         {searchSection}
       </Grid>
 
-      <Grid item xs={12} md={4} align="right">
+      <Grid item xs={12} md={3} align="right">
         {loginSection}
       </Grid>
     </>
