@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 import {
   Box,
   Grid,
@@ -41,10 +43,29 @@ function DefaultHome() {
     }, randomSecond())
   }, [])
 
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate("/search")
+  }
+
+  const itemLarge = (
+    <Grid item sx={{ justifyContent: "center" }}>
+      <Card sx={{ minWidth: "125px" }}>
+        <CardActionArea onClick={handleClick}>
+          <CardMedia component="img" height="105" image="/cartoon-candy.png" />
+          <CardContent>
+            <Typography>Butter Scotch</Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
+  )
+
   const itemMedium = (
     <Grid item sx={{ justifyContent: "center" }}>
       <Card>
-        <CardActionArea>
+        <CardActionArea onClick={handleClick}>
           <CardMedia component="img" height="80" image="/cartoon-candy.png" />
           <CardContent>
             <Typography>Butter Scotch</Typography>
@@ -54,10 +75,16 @@ function DefaultHome() {
     </Grid>
   )
 
+  const skeletonMedium = (
+    <Grid item>
+      <Skeleton variant="rounded" width={130} height={130} animation="wave" />
+    </Grid>
+  )
+
   const itemSmall = (
     <Grid item sx={{ justifyContent: "center" }}>
       <Card>
-        <CardActionArea>
+        <CardActionArea onClick={handleClick}>
           <CardMedia component="img" height="50" image="/cartoon-candy.png" />
         </CardActionArea>
       </Card>
@@ -85,7 +112,7 @@ function DefaultHome() {
           </Box>
         </Grid>
         <Grid item xs={12} align="center">
-          <Box className={styles.box}>
+          <Box className={styles.boxOne}>
             <h2>Purple Thursday</h2>
             <p>
               Shop the hottest deals this Purple Thursday, now available all
@@ -93,13 +120,25 @@ function DefaultHome() {
             </p>
             <Box sx={{ width: 750 }}>
               {isBox1Loading ? (
-                <>
-                  <Skeleton />
-                  <Skeleton animation="wave" />
-                  <Skeleton animation={false} />
-                </>
+                <Box>
+                  <Grid container spacing={2}>
+                    {skeletonMedium}
+                    {skeletonMedium}
+                    {skeletonMedium}
+                    {skeletonMedium}
+                    {skeletonMedium}
+                  </Grid>
+                </Box>
               ) : (
-                "Loaded"
+                <Box>
+                  <Grid container spacing={1}>
+                    {itemLarge}
+                    {itemLarge}
+                    {itemLarge}
+                    {itemLarge}
+                    {itemLarge}
+                  </Grid>
+                </Box>
               )}
             </Box>
           </Box>
@@ -109,11 +148,13 @@ function DefaultHome() {
             <p>Recommeneded for you</p>
             <Box>
               {isBox2Loading ? (
-                <>
-                  <Skeleton />
-                  <Skeleton animation="wave" />
-                  <Skeleton animation={false} />
-                </>
+                <Box>
+                  <Grid container spacing={2}>
+                    {skeletonMedium}
+                    {skeletonMedium}
+                    {skeletonMedium}
+                  </Grid>
+                </Box>
               ) : (
                 <Box>
                   <Grid container spacing={2}>
