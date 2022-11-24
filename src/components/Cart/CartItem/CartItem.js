@@ -1,5 +1,13 @@
 import { useDispatch } from "react-redux"
-import { Card, Box, Grid, IconButton, Select, MenuItem } from "@mui/material"
+import {
+  Card,
+  Box,
+  Grid,
+  IconButton,
+  Select,
+  MenuItem,
+  Typography,
+} from "@mui/material"
 import { Delete } from "@mui/icons-material"
 
 import {
@@ -22,11 +30,30 @@ function CartTotal({ name, quantity, price }) {
 
   return (
     <Box sx={{ margin: "20px" }}>
-      <Card sx={{ padding: "20px" }}>
+      <Card sx={{ padding: "20px", width: "370px" }}>
         <Grid container spacing={2}>
-          <Grid item>{name}</Grid>
-          <Grid item>
-            <Select value={quantity} label="quantity" onChange={updateQuantity}>
+          <Grid item xs={10}>
+            <Typography align="left" variant="h6">
+              {name}
+            </Typography>
+          </Grid>
+          <Grid item xs={2} align="right">
+            <b>
+              {price.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </b>
+          </Grid>
+
+          <Grid item xs={6} align="left">
+            <Select
+              size="small"
+              variant="standard"
+              value={quantity}
+              label="quantity"
+              onChange={updateQuantity}
+            >
               {formOptions.map((item) => (
                 <MenuItem key={item} value={item}>
                   {item}
@@ -34,19 +61,7 @@ function CartTotal({ name, quantity, price }) {
               ))}
             </Select>
           </Grid>
-          <Grid item>
-            {price.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-            x {quantity} =
-            {(quantity * price).toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-          </Grid>
-
-          <Grid item>
+          <Grid item xs={6} align="right">
             <IconButton color="primary" sx={{ p: "10px" }} onClick={removeItem}>
               <Delete />
             </IconButton>
