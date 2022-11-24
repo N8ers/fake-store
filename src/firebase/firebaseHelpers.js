@@ -3,9 +3,6 @@ import {
   doc,
   setDoc,
   collection,
-  writeBatch,
-  query,
-  getDocs,
   addDoc,
   updateDoc,
   getDoc,
@@ -30,24 +27,11 @@ export const db = getFirestore()
 // SEED DB HELPER //
 ////////////////////
 
-export const seedDB = () => {
-  addCollectionAndDocuments("categories", SHOP_DATA)
-}
-
-export const addCollectionAndDocuments = async (
-  collectionKey,
-  objectsToAdd
-) => {
-  const collectionRef = collection(db, collectionKey)
-  const batch = writeBatch(db)
-
-  objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.title.toLowerCase())
-    batch.set(docRef, object)
+export const seedDB = async () => {
+  const itemsDocRef = doc(db, "products", "productsDoc")
+  await updateDoc(itemsDocRef, {
+    items: SHOP_DATA,
   })
-
-  await batch.commit()
-  console.log("done")
 }
 
 //////////////////
@@ -66,17 +50,12 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
 ////////////////
 
 export const getFirebaseData = async () => {
-  const collectionRef = collection(db, "categories")
-  const q = query(collectionRef)
-  const querySnapshot = await getDocs(q)
+  const productsDocRef = doc(db, "products", "productsDoc")
+  const productsSnapshot = await getDoc(productsDocRef)
+  const data = productsSnapshot.data()
+  const items = data.items
 
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data()
-    acc[title.toLowerCase()] = items
-    return acc
-  }, {})
-
-  return categoryMap
+  return items
 }
 
 export const getUserCart = async (cartDocumentId) => {

@@ -1,6 +1,14 @@
-import { Box, Grid, Button, Snackbar, Alert } from "@mui/material"
 import { useSelector, useDispatch } from "react-redux"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import {
+  Box,
+  Grid,
+  Button,
+  Snackbar,
+  Alert,
+  useMediaQuery,
+} from "@mui/material"
+import { useTheme } from "@mui/material/styles"
 
 import { checkout } from "../../store/index"
 
@@ -23,8 +31,19 @@ function Cart() {
     setIsCheckedout(false)
   }
 
+  const [topMargin, setTopMargin] = useState("60px")
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up("md"))
+  useEffect(() => {
+    if (matches) {
+      setTopMargin("0px")
+    } else {
+      setTopMargin("60px")
+    }
+  }, [matches])
+
   return (
-    <div className={styles.container}>
+    <Box className={styles.container} sx={{ marginTop: topMargin }}>
       <h3>Cart</h3>
       <Box
         sx={{ flexGrow: 1, marginTop: "30px", marginLeft: "20px" }}
@@ -65,7 +84,7 @@ function Cart() {
           Checkout!
         </Button>
       )}
-    </div>
+    </Box>
   )
 }
 

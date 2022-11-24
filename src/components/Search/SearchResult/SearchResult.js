@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
   Card,
@@ -6,6 +6,13 @@ import {
   CardMedia,
   Button,
   Select,
+  Dialog,
+  Snackbar,
+  Alert,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
   MenuItem,
   Typography,
 } from "@mui/material"
@@ -15,12 +22,40 @@ import { addToCart } from "../../../store/index"
 function SearchResult({ id, imageUrl, name, price }) {
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  const cartItems = useSelector((state) => state.cart.items)
+
+  const [addToCartDialog, setAddToCartDialog] = useState(false)
+  const [quantityOfItemInCart, setQuantityOfItemInCart] = useState(0)
+  const [isAddedToCart, setIsAddedToCart] = useState(false)
 
   const [quantity, setQuantity] = useState(0)
   const formOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-  const addItemToCart = () => {
+  const handleSnackbarClose = () => {
+    setIsAddedToCart(false)
+  }
+
+  useEffect(() => {
+    const cartItem = cartItems.filter((item) => item.name === name)[0]
+
+    if (cartItem) {
+      setQuantityOfItemInCart(cartItem.quantity)
+    }
+  }, [dispatch, cartItems, name])
+
+  const updateCartItem = () => {
     dispatch(addToCart({ name, price, quantity }))
+    setIsAddedToCart(true)
+    setAddToCartDialog(false)
+  }
+
+  const addItemToCart = () => {
+    if (quantityOfItemInCart) {
+      setAddToCartDialog(true)
+    } else {
+      dispatch(addToCart({ name, price, quantity }))
+      setIsAddedToCart(true)
+    }
   }
 
   return (
@@ -40,6 +75,8 @@ function SearchResult({ id, imageUrl, name, price }) {
         {isLoggedIn && (
           <>
             <Select
+              size="small"
+              variant="standard"
               value={quantity}
               label="quantity"
               onChange={(e) => setQuantity(e.target.value)}
@@ -50,10 +87,42 @@ function SearchResult({ id, imageUrl, name, price }) {
                 </MenuItem>
               ))}
             </Select>
-            <Button onClick={addItemToCart}>Add to Cart!</Button>
+            <Button disabled={!quantity} onClick={addItemToCart}>
+              Add to Cart!
+            </Button>
           </>
         )}
       </CardContent>
+
+      <Dialog open={addToCartDialog}>
+        <DialogTitle>Item is already in cart</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            You already have <b>{quantityOfItemInCart}</b> <b>{name}</b> in your
+            cart.
+            <br />
+            Do you want to update your cart to have <b>{quantity}</b>{" "}
+            <b>{name}</b>?
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={() => setAddToCartDialog(false)}>No</Button>
+          <Button onClick={updateCartItem}>Yes</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={isAddedToCart}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        onClose={handleSnackbarClose}
+      >
+        <Alert severity="success">
+          Added {quantity} {name} to your cart
+        </Alert>
+      </Snackbar>
     </Card>
   )
 }

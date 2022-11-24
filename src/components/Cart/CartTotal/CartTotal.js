@@ -1,20 +1,22 @@
-import { Card, CardActionArea, Box, Grid } from "@mui/material"
+import { Card, Box, Grid } from "@mui/material"
 
 function CartItem({ total }) {
   return (
     <Box sx={{ margin: "20px" }}>
       <Card sx={{ padding: "20px" }}>
-        <CardActionArea>
-          <Grid container spacing={2}>
-            <Grid item>
-              Cart Total:
+        <Grid container spacing={2} align="left">
+          <Grid item xs={6}>
+            Cart Total:
+          </Grid>
+          <Grid item xs={6} align="right">
+            <b>
               {total.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
               })}
-            </Grid>
+            </b>
           </Grid>
-        </CardActionArea>
+        </Grid>
       </Card>
     </Box>
   )

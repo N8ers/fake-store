@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
-import { CircularProgress, Backdrop } from "@mui/material"
+import { CircularProgress, Backdrop, Toolbar } from "@mui/material"
 
 import { checkAuthOnLoad, loadUserData, fetchTheData } from "./store"
 
@@ -12,6 +12,8 @@ import Home from "./pages/Home/Home"
 import UserSettings from "./pages/UserSettings/UserSettings"
 import Cart from "./pages/Cart/Cart"
 import Search from "./pages/Search/Search"
+
+import styles from "./App.module.css"
 
 function App() {
   const dispatch = useDispatch()
@@ -32,8 +34,9 @@ function App() {
   }, [dispatch])
 
   return (
-    <div>
+    <div className={styles.container}>
       <NavBar />
+      <Toolbar />
 
       <Backdrop open={isLoading}>
         <CircularProgress />
