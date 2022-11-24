@@ -52,17 +52,12 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
 ////////////////
 
 export const getFirebaseData = async () => {
-  const collectionRef = collection(db, "categories")
-  const q = query(collectionRef)
-  const querySnapshot = await getDocs(q)
+  const productsDocRef = doc(db, "products", "productsDoc")
+  const productsSnapshot = await getDoc(productsDocRef)
+  const data = productsSnapshot.data()
+  const items = data.items
 
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data()
-    acc[title.toLowerCase()] = items
-    return acc
-  }, {})
-
-  return categoryMap
+  return items
 }
 
 export const getUserCart = async (cartDocumentId) => {
