@@ -48,10 +48,10 @@ function DefaultHome() {
   }
 
   const itemLarge = (
-    <Grid item xs={6} sm={4} md={2} lg={1} sx={{ justifyContent: "center" }}>
-      <Card sx={{ minWidth: "125px", maxWidth: "125px" }}>
+    <Grid item xs={6} sm={4} md={2}>
+      <Card>
         <CardActionArea onClick={handleClick}>
-          <CardMedia component="img" height="105" image="/cartoon-candy.png" />
+          <CardMedia component="img" image="/cartoon-candy.png" />
           <CardContent>
             <Typography>Butter Scotch</Typography>
           </CardContent>
@@ -114,7 +114,7 @@ function DefaultHome() {
         Shop the hottest deals this Purple Thursday, now available all month
         long!
       </p>
-      <Box sx={{ maxWidth: 750 }}>
+      <Box sx={{ maxWidth: 1000 }}>
         {isBox1Loading ? (
           <Box>
             <Grid container spacing={2}>
@@ -127,7 +127,8 @@ function DefaultHome() {
           </Box>
         ) : (
           <Box>
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
+              {itemLarge}
               {itemLarge}
               {itemLarge}
               {itemLarge}
