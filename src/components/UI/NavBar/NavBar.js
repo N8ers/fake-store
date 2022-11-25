@@ -39,6 +39,7 @@ function NavBar() {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const firstName = useSelector((state) => state.user.firstName)
   const itemsInCart = useSelector((state) => state.cart.items.length)
+  const searchTerm = useSelector((state) => state.search.searchTerm)
 
   const [isDesktopView, setIsDesktopView] = useState(false)
   const theme = useTheme()
@@ -54,6 +55,9 @@ function NavBar() {
   }
 
   const [search, setSearch] = useState("")
+  useEffect(() => {
+    setSearch(searchTerm)
+  }, [searchTerm])
 
   // MENU
   const [anchorEl, setAnchorEl] = useState(null)

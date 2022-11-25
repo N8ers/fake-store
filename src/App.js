@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 import { CircularProgress, Backdrop, Toolbar } from "@mui/material"
@@ -19,6 +19,11 @@ import styles from "./App.module.css"
 
 function App() {
   const dispatch = useDispatch()
+  const location = useLocation()
+
+  if (location.pathname === "/search" && location.search) {
+    dispatch({ type: "search/SEARCH_TERM", payload: location.search })
+  }
 
   const isLoading = useSelector((state) => state.general.isLoading)
   const userUid = useSelector((state) => state.user.uid)
