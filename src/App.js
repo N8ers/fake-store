@@ -8,6 +8,8 @@ import { checkAuthOnLoad, loadUserData, fetchTheData } from "./store"
 
 import NavBar from "./components/UI/NavBar/NavBar"
 
+import PrivateRoutes from "./PrivateRoutes"
+
 import Home from "./pages/Home/Home"
 import UserSettings from "./pages/UserSettings/UserSettings"
 import Cart from "./pages/Cart/Cart"
@@ -45,8 +47,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/settings" element={<UserSettings />} />
-        <Route path="/cart" element={<Cart />} />
+
+        <Route element={<PrivateRoutes />}>
+          <Route path="/settings" element={<UserSettings />} />
+          <Route path="/cart" element={<Cart />} />
+        </Route>
+
+        <Route path="*" element={<Home />} />
       </Routes>
     </div>
   )

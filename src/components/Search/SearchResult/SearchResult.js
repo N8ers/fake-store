@@ -19,6 +19,11 @@ import {
 
 import { addToCart } from "../../../store/index"
 
+import {
+  signInWithGooglePopup,
+  createUserDocumentFromAuth,
+} from "../../../firebase/firebaseHelpers"
+
 function SearchResult({ id, imageUrl, name, price }) {
   const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
@@ -58,6 +63,17 @@ function SearchResult({ id, imageUrl, name, price }) {
     }
   }
 
+  const logGoogleUser = async () => {
+    const { user } = await signInWithGooglePopup()
+    const result = await createUserDocumentFromAuth(user)
+    const payload = {
+      displayName: result.displayName,
+      email: result.email,
+      uid: result.uid,
+    }
+    dispatch({ type: "user/SET_USER", payload: payload })
+  }
+
   return (
     <Card sx={{ maxWidth: 300 }}>
       <CardMedia component="img" height="140" image="/cartoon-candy.png" />
@@ -72,7 +88,7 @@ function SearchResult({ id, imageUrl, name, price }) {
           ${price}
         </Typography>
 
-        {isLoggedIn && (
+        {isLoggedIn ? (
           <>
             <Select
               size="small"
@@ -91,6 +107,8 @@ function SearchResult({ id, imageUrl, name, price }) {
               Add to Cart!
             </Button>
           </>
+        ) : (
+          <Button onClick={logGoogleUser}>Add to Cart!</Button>
         )}
       </CardContent>
 
