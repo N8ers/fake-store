@@ -17,10 +17,10 @@ import {
   Typography,
 } from "@mui/material"
 
-import { addToCart } from "../../../store/index"
+import { addToCart } from "../../../store/actions"
 
 import {
-  signInWithGooglePopup,
+  sign_user_in,
   createUserDocumentFromAuth,
 } from "../../../firebase/firebaseHelpers"
 
@@ -64,7 +64,7 @@ function SearchResult({ id, imageUrl, name, price }) {
   }
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup()
+    const { user } = await sign_user_in()
     const result = await createUserDocumentFromAuth(user)
     const payload = {
       displayName: result.displayName,

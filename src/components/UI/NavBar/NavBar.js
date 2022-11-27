@@ -27,11 +27,11 @@ import {
 } from "@mui/icons-material"
 
 import {
-  signInWithGooglePopup,
-  createUserDocumentFromAuth,
-  logUserOutGoogle,
-  // seedDB,
+  log_user_out,
+  // seed_db,
 } from "../../../firebase/firebaseHelpers"
+
+import { logUserIn } from "../../../store/actions"
 
 function NavBar() {
   const navigate = useNavigate()
@@ -76,19 +76,12 @@ function NavBar() {
     setAnchorEl(null)
   }
 
-  const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup()
-    const result = await createUserDocumentFromAuth(user)
-    const payload = {
-      displayName: result.displayName,
-      email: result.email,
-      uid: result.uid,
-    }
-    dispatch({ type: "user/SET_USER", payload: payload })
+  const handleLogin = async () => {
+    dispatch(logUserIn())
   }
 
   const logUserOut = async () => {
-    await logUserOutGoogle()
+    await log_user_out()
     handleClose()
     dispatch({ type: "user/CLEAR_USER" })
   }
@@ -139,7 +132,7 @@ function NavBar() {
       {isLoggedIn ? (
         <>
           {isDesktopView && <span>Hi, {firstName}</span>}
-          {/* <Button size="large" color="inherit" onClick={seedDB}>
+          {/* <Button size="large" color="inherit" onClick={seed_db}>
                     <Forest />
                     Seed DB
                   </Button> */}
@@ -171,7 +164,7 @@ function NavBar() {
           variant="contained"
           color="secondary"
           sx={{ mt: 1 }}
-          onClick={logGoogleUser}
+          onClick={handleLogin}
         >
           Log In
         </Button>

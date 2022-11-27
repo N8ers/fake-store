@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { CircularProgress, Backdrop, Toolbar } from "@mui/material"
 
-import { checkAuthOnLoad, loadUserData, fetchTheData } from "./store"
+import {
+  checkAuthOnLoad,
+  loadUserData,
+  fetchTheData,
+  getCart,
+} from "./store/actions"
 
 import NavBar from "./components/UI/NavBar/NavBar"
 
@@ -50,6 +55,7 @@ function App() {
 
   const isLoading = useSelector((state) => state.general.isLoading)
   const userUid = useSelector((state) => state.user.uid)
+  const cartDocumentId = useSelector((state) => state.user.cartDocumentId)
 
   useEffect(() => {
     dispatch(checkAuthOnLoad())
@@ -58,6 +64,10 @@ function App() {
   useEffect(() => {
     dispatch(loadUserData())
   }, [dispatch, userUid])
+
+  useEffect(() => {
+    dispatch(getCart())
+  }, [dispatch, cartDocumentId])
 
   useEffect(() => {
     dispatch(fetchTheData())

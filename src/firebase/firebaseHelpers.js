@@ -20,6 +20,14 @@ provider.setCustomParameters({
   prompt: "select_account",
 })
 
+/**
+ * TODO
+ * Move actions into their own file
+ * Move thunks into their own file
+ * Refactor Firebasehelpers
+ * Rename Actions/Thunks/Firebase Helpers (for consistancey, and because some names are bad)
+ */
+
 export const auth = getAuth()
 export const db = getFirestore()
 
@@ -27,7 +35,7 @@ export const db = getFirestore()
 // SEED DB HELPER //
 ////////////////////
 
-export const seedDB = async () => {
+export const seed_db = async () => {
   const itemsDocRef = doc(db, "products", "productsDoc")
   await updateDoc(itemsDocRef, {
     items: SHOP_DATA,
@@ -38,18 +46,15 @@ export const seedDB = async () => {
 // AUTH HELPERS //
 //////////////////
 
-export const logUserOutGoogle = async () => {
-  await auth.signOut()
-  return true
-}
+export const log_user_out = async () => await auth.signOut()
 
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+export const sign_user_in = () => signInWithPopup(auth, provider)
 
 ////////////////
 // DB Helpers //
 ////////////////
 
-export const getFirebaseData = async () => {
+export const get_products = async () => {
   const productsDocRef = doc(db, "products", "productsDoc")
   const productsSnapshot = await getDoc(productsDocRef)
   const data = productsSnapshot.data()
@@ -58,21 +63,56 @@ export const getFirebaseData = async () => {
   return items
 }
 
-export const getUserCart = async (cartDocumentId) => {
+export const get_cart = async (cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const cartSnapshot = await getDoc(cartDocRef)
 
   return cartSnapshot.data()
 }
 
-export const getUserData = async (uid) => {
-  const userDocRef = doc(db, "users", uid)
-  const userSnapshot = await getDoc(userDocRef)
+export const get_user = async (user) => {
+  const userDocRef = doc(db, "users", user.uid)
+  let userSnapshot = await getDoc(userDocRef)
 
-  return userSnapshot.data()
+  if (!userSnapshot.exists()) {
+    await initialize_user(user)
+    userSnapshot = await getDoc(userDocRef)
+  }
+
+  const snapshotData = userSnapshot.data()
+
+  const data = {
+    ...snapshotData,
+    uid: user.uid,
+  }
+
+  return data
 }
 
-export const removeItemFromCart = async (name, cartDocumentId) => {
+export const initialize_user = async ({ displayName, email, uid }) => {
+  // Create User
+  const createdAt = new Date()
+  await setDoc(doc(db, "users", uid), {
+    displayName,
+    email,
+    createdAt,
+    cartDocumentId: null,
+  })
+
+  // Create Cart
+  const cartDocRef = await addDoc(collection(db, "carts"), {
+    userUid: uid,
+    items: [],
+  })
+
+  // Set user.cartDocumentId
+  const userRef = doc(db, "users", uid)
+  await updateDoc(userRef, {
+    cartDocumentId: cartDocRef._key.path.segments[1],
+  })
+}
+
+export const delete_cart_item = async (name, cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const currentCartSnapshot = await getDoc(cartDocRef)
   const currentCartData = currentCartSnapshot.data()
@@ -87,14 +127,14 @@ export const removeItemFromCart = async (name, cartDocumentId) => {
   return updatedCartSnapshot.data()
 }
 
-export const clearCart = async (cartDocumentId) => {
+export const set_cart_empty = async (cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   await updateDoc(cartDocRef, {
     items: [],
   })
 }
 
-export const updateCartQuantity = async (name, quantity, cartDocumentId) => {
+export const update_cart_item = async (name, quantity, cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const currentCartSnapshot = await getDoc(cartDocRef)
   const currentCartData = currentCartSnapshot.data()
@@ -114,7 +154,7 @@ export const updateCartQuantity = async (name, quantity, cartDocumentId) => {
   return updatedCartSnapshot.data()
 }
 
-export const addItemToCart = async (payload, cartDocumentId) => {
+export const create_cart_item = async (payload, cartDocumentId) => {
   // get existing data
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const currentCartSnapshot = await getDoc(cartDocRef)
@@ -143,6 +183,15 @@ export const addItemToCart = async (payload, cartDocumentId) => {
   return updatedCartSnapshot.data()
 }
 
+/**
+ * This could use a big ole refactore
+ * ATM this gets or creates a user in the "users" collection
+ * returns { displayName, email, uid }
+ *
+ * we should, add a separate 'create_user' helper
+ * we should, wrap this in a thunk, and set the store from the thunk
+ *    not in the component, as we do now
+ */
 export const createUserDocumentFromAuth = async (userAuth) => {
   // GET if user exists or CREATE and GET user
   const userDocRef = doc(db, "users", userAuth.uid)
