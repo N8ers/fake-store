@@ -35,7 +35,7 @@ export const db = getFirestore()
 // SEED DB HELPER //
 ////////////////////
 
-export const seedDB = async () => {
+export const seed_db = async () => {
   const itemsDocRef = doc(db, "products", "productsDoc")
   await updateDoc(itemsDocRef, {
     items: SHOP_DATA,
@@ -46,18 +46,17 @@ export const seedDB = async () => {
 // AUTH HELPERS //
 //////////////////
 
-export const logUserOutGoogle = async () => {
+export const log_user_out = async () => {
   await auth.signOut()
   return true
 }
 
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+export const sign_user_in = () => signInWithPopup(auth, provider)
 
 ////////////////
 // DB Helpers //
 ////////////////
 
-// get_products
 export const get_products = async () => {
   const productsDocRef = doc(db, "products", "productsDoc")
   const productsSnapshot = await getDoc(productsDocRef)
@@ -67,7 +66,6 @@ export const get_products = async () => {
   return items
 }
 
-// get_cart
 export const get_cart = async (cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const cartSnapshot = await getDoc(cartDocRef)
@@ -75,7 +73,6 @@ export const get_cart = async (cartDocumentId) => {
   return cartSnapshot.data()
 }
 
-// get_user
 export const get_user = async (uid) => {
   const userDocRef = doc(db, "users", uid)
   const userSnapshot = await getDoc(userDocRef)
@@ -83,7 +80,6 @@ export const get_user = async (uid) => {
   return userSnapshot.data()
 }
 
-// delete_cart_item
 export const delete_cart_item = async (name, cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const currentCartSnapshot = await getDoc(cartDocRef)
@@ -99,7 +95,6 @@ export const delete_cart_item = async (name, cartDocumentId) => {
   return updatedCartSnapshot.data()
 }
 
-// set_cart_empty
 export const set_cart_empty = async (cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   await updateDoc(cartDocRef, {
@@ -107,7 +102,6 @@ export const set_cart_empty = async (cartDocumentId) => {
   })
 }
 
-// update_cart_item
 export const update_cart_item = async (name, quantity, cartDocumentId) => {
   const cartDocRef = doc(db, "carts", cartDocumentId)
   const currentCartSnapshot = await getDoc(cartDocRef)
@@ -128,7 +122,6 @@ export const update_cart_item = async (name, quantity, cartDocumentId) => {
   return updatedCartSnapshot.data()
 }
 
-// create_cart_item
 export const create_cart_item = async (payload, cartDocumentId) => {
   // get existing data
   const cartDocRef = doc(db, "carts", cartDocumentId)

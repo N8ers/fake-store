@@ -27,10 +27,10 @@ import {
 } from "@mui/icons-material"
 
 import {
-  signInWithGooglePopup,
+  sign_user_in,
   createUserDocumentFromAuth,
-  logUserOutGoogle,
-  // seedDB,
+  log_user_out,
+  // seed_db,
 } from "../../../firebase/firebaseHelpers"
 
 function NavBar() {
@@ -77,7 +77,7 @@ function NavBar() {
   }
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup()
+    const { user } = await sign_user_in()
     const result = await createUserDocumentFromAuth(user)
     const payload = {
       displayName: result.displayName,
@@ -88,7 +88,7 @@ function NavBar() {
   }
 
   const logUserOut = async () => {
-    await logUserOutGoogle()
+    await log_user_out()
     handleClose()
     dispatch({ type: "user/CLEAR_USER" })
   }
@@ -139,7 +139,7 @@ function NavBar() {
       {isLoggedIn ? (
         <>
           {isDesktopView && <span>Hi, {firstName}</span>}
-          {/* <Button size="large" color="inherit" onClick={seedDB}>
+          {/* <Button size="large" color="inherit" onClick={seed_db}>
                     <Forest />
                     Seed DB
                   </Button> */}
