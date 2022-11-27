@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 import { CircularProgress, Backdrop, Toolbar } from "@mui/material"
@@ -19,6 +19,34 @@ import styles from "./App.module.css"
 
 function App() {
   const dispatch = useDispatch()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === "/search" && location.search) {
+      /**
+       * Sample URL Schema
+       * `search?q=roo&price=asc&price-range=[100,250]&categories=[hard,baked-good]`
+       * `q` will always be the searched term
+       */
+
+      const parsedUrl = location.search.slice(1)
+      const queryParams = parsedUrl.split("&")
+      const params = {}
+
+      queryParams.forEach((param) => {
+        const [key, value] = param.split("=")
+        params[key] = value
+      })
+
+      const searchTerm = params.q
+      /**
+       * We will need to make this more robuse in the future for filtering.
+       * For now we just hard code the `q=value`
+       */
+
+      dispatch({ type: "search/SEARCH_TERM", payload: searchTerm })
+    }
+  })
 
   const isLoading = useSelector((state) => state.general.isLoading)
   const userUid = useSelector((state) => state.user.uid)
