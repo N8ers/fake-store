@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material"
 
-import { addToCart } from "../../../store/index"
+import { addToCart } from "../../../store/actions"
 
 import {
   signInWithGooglePopup,

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 
-import { fetchTheData } from "../../store"
+import { fetchTheData } from "../../store/actions"
 
 import Ads from "../../components/Home/Ads/Ads"
 

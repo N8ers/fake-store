@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { CircularProgress, Backdrop, Toolbar } from "@mui/material"
 
-import { checkAuthOnLoad, loadUserData, fetchTheData } from "./store"
+import { checkAuthOnLoad, loadUserData, fetchTheData } from "./store/actions"
 
 import NavBar from "./components/UI/NavBar/NavBar"
 

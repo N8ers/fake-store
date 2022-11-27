@@ -13,7 +13,7 @@ import { Delete } from "@mui/icons-material"
 import {
   removeItemFromCartThunk,
   updateCartQuantityThunk,
-} from "../../../store/index"
+} from "../../../store/actions"
 
 function CartTotal({ name, quantity, price }) {
   const dispatch = useDispatch()

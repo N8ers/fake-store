@@ -10,7 +10,7 @@ import {
 } from "@mui/material"
 import { useTheme } from "@mui/material/styles"
 
-import { checkout } from "../../store/index"
+import { checkout } from "../../store/actions"
 
 import CartItem from "../../components/Cart/CartItem/CartItem"
 import CartTotal from "../../components/Cart/CartTotal/CartTotal"
