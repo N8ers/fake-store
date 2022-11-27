@@ -27,8 +27,6 @@ import {
 } from "@mui/icons-material"
 
 import {
-  sign_user_in,
-  createUserDocumentFromAuth,
   log_user_out,
   // seed_db,
 } from "../../../firebase/firebaseHelpers"
