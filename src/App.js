@@ -23,7 +23,6 @@ function App() {
 
   useEffect(() => {
     if (location.pathname === "/search" && location.search) {
-      console.log("fire useEffect")
       /**
        * Sample URL Schema
        * `search?q=roo&price=asc&price-range=[100,250]&categories=[hard,baked-good]`
