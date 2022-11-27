@@ -20,6 +20,14 @@ provider.setCustomParameters({
   prompt: "select_account",
 })
 
+/**
+ * TODO
+ * Move actions into their own file
+ * Move thunks into their own file
+ * Refactor Firebasehelpers
+ * Rename Actions/Thunks/Firebase Helpers (for consistancey, and because some names are bad)
+ */
+
 export const auth = getAuth()
 export const db = getFirestore()
 
