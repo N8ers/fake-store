@@ -58,7 +58,6 @@ function NavBar() {
     }
     navigate("/search" + queryParams)
 
-    // navigate("/search")
     dispatch({ type: "search/SEARCH_TERM", payload: search })
   }
 
