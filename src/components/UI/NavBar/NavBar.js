@@ -33,6 +33,8 @@ import {
   // seed_db,
 } from "../../../firebase/firebaseHelpers"
 
+import { logUserIn } from "../../../store/actions"
+
 function NavBar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -76,15 +78,8 @@ function NavBar() {
     setAnchorEl(null)
   }
 
-  const logGoogleUser = async () => {
-    const { user } = await sign_user_in()
-    const result = await createUserDocumentFromAuth(user)
-    const payload = {
-      displayName: result.displayName,
-      email: result.email,
-      uid: result.uid,
-    }
-    dispatch({ type: "user/SET_USER", payload: payload })
+  const handleLogin = async () => {
+    dispatch(logUserIn())
   }
 
   const logUserOut = async () => {
@@ -171,7 +166,7 @@ function NavBar() {
           variant="contained"
           color="secondary"
           sx={{ mt: 1 }}
-          onClick={logGoogleUser}
+          onClick={handleLogin}
         >
           Log In
         </Button>

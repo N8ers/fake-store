@@ -7,9 +7,31 @@ import {
   get_user,
   create_cart_item,
   set_cart_empty,
+  sign_user_in,
   delete_cart_item,
   update_cart_item,
 } from "../firebase/firebaseHelpers"
+
+export const logUserIn = () => async (dispatch) => {
+  dispatch({ type: "general/SET_IS_LOADING", payload: true })
+
+  const { user } = await sign_user_in()
+
+  const { displayName, cartDocumentId, email, uid } = await get_user(user)
+  const firstName = displayName.split(" ")[0]
+
+  const userPayload = {
+    isLoggedIn: true,
+    displayName,
+    cartDocumentId,
+    firstName,
+    email,
+    uid,
+  }
+
+  dispatch({ type: "user/SET_USER", payload: userPayload })
+  dispatch({ type: "general/SET_IS_LOADING", payload: false })
+}
 
 // getProducts
 export const fetchTheData = () => async (dispatch) => {
@@ -44,22 +66,35 @@ export const loadUserData = () => async (dispatch, getState) => {
   dispatch({ type: "general/SET_IS_LOADING", payload: true })
 
   const state = getState()
+  const user = state.user
 
-  const userUid = state.user.uid
-  if (userUid) {
-    const userData = await get_user(state.user.uid)
-    const { displayName, email, cartDocumentId } = userData
+  if (user.uid) {
+    const { displayName, cartDocumentId, email, uid } = await get_user(user)
+    const firstName = displayName.split(" ")[0]
+
     const userPayload = {
       isLoggedIn: true,
       displayName,
       cartDocumentId,
-      firstName: displayName.split(" ")[0],
+      firstName,
       email,
-      uid: userUid,
+      uid,
     }
-    dispatch({ type: "user/SET_USER", payload: userPayload })
 
-    const cartData = await get_cart(userData.cartDocumentId)
+    dispatch({ type: "user/SET_USER", payload: userPayload })
+  }
+
+  dispatch({ type: "general/SET_IS_LOADING", payload: false })
+}
+
+export const getCart = () => async (dispatch, getState) => {
+  dispatch({ type: "general/SET_IS_LOADING", payload: true })
+
+  const state = getState()
+  const user = state.user
+
+  if (user.cartDocumentId) {
+    const cartData = await get_cart(user.cartDocumentId)
     const cartTotal = cartData.items.reduce(
       (accumulator, cartItem) =>
         accumulator + cartItem.quantity * cartItem.price,

@@ -46,10 +46,7 @@ export const seed_db = async () => {
 // AUTH HELPERS //
 //////////////////
 
-export const log_user_out = async () => {
-  await auth.signOut()
-  return true
-}
+export const log_user_out = async () => await auth.signOut()
 
 export const sign_user_in = () => signInWithPopup(auth, provider)
 
@@ -73,11 +70,46 @@ export const get_cart = async (cartDocumentId) => {
   return cartSnapshot.data()
 }
 
-export const get_user = async (uid) => {
-  const userDocRef = doc(db, "users", uid)
-  const userSnapshot = await getDoc(userDocRef)
+export const get_user = async (user) => {
+  const userDocRef = doc(db, "users", user.uid)
+  let userSnapshot = await getDoc(userDocRef)
 
-  return userSnapshot.data()
+  if (!userSnapshot.exists()) {
+    await initialize_user(user)
+    userSnapshot = await getDoc(userDocRef)
+  }
+
+  const snapshotData = userSnapshot.data()
+
+  const data = {
+    ...snapshotData,
+    uid: user.uid,
+  }
+
+  return data
+}
+
+export const initialize_user = async ({ displayName, email, uid }) => {
+  // Create User
+  const createdAt = new Date()
+  await setDoc(doc(db, "users", uid), {
+    displayName,
+    email,
+    createdAt,
+    cartDocumentId: null,
+  })
+
+  // Create Cart
+  const cartDocRef = await addDoc(collection(db, "carts"), {
+    userUid: uid,
+    items: [],
+  })
+
+  // Set user.cartDocumentId
+  const userRef = doc(db, "users", uid)
+  await updateDoc(userRef, {
+    cartDocumentId: cartDocRef._key.path.segments[1],
+  })
 }
 
 export const delete_cart_item = async (name, cartDocumentId) => {
