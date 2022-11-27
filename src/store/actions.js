@@ -2,21 +2,22 @@ import { onAuthStateChanged } from "firebase/auth"
 
 import {
   auth,
-  getFirebaseData,
-  getUserCart,
-  getUserData,
-  addItemToCart,
-  clearCart,
-  removeItemFromCart,
-  updateCartQuantity,
+  get_products,
+  get_cart,
+  get_user,
+  create_cart_item,
+  set_cart_empty,
+  delete_cart_item,
+  update_cart_item,
 } from "../firebase/firebaseHelpers"
 
-export const fetchTheData = () => async (dispatch, getState) => {
-  const result = await getFirebaseData()
+// getProducts
+export const fetchTheData = () => async (dispatch) => {
+  const result = await get_products()
   dispatch({ type: "search/SET_RESULTS", payload: result })
 }
 
-export const checkAuthOnLoad = () => async (dispatch, getState) => {
+export const checkAuthOnLoad = () => async (dispatch) => {
   dispatch({ type: "general/SET_IS_LOADING", payload: true })
   await onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -38,6 +39,7 @@ export const checkAuthOnLoad = () => async (dispatch, getState) => {
   })
 }
 
+// getUser
 export const loadUserData = () => async (dispatch, getState) => {
   dispatch({ type: "general/SET_IS_LOADING", payload: true })
 
@@ -45,7 +47,7 @@ export const loadUserData = () => async (dispatch, getState) => {
 
   const userUid = state.user.uid
   if (userUid) {
-    const userData = await getUserData(state.user.uid)
+    const userData = await get_user(state.user.uid)
     const { displayName, email, cartDocumentId } = userData
     const userPayload = {
       isLoggedIn: true,
@@ -57,7 +59,7 @@ export const loadUserData = () => async (dispatch, getState) => {
     }
     dispatch({ type: "user/SET_USER", payload: userPayload })
 
-    const cartData = await getUserCart(userData.cartDocumentId)
+    const cartData = await get_cart(userData.cartDocumentId)
     const cartTotal = cartData.items.reduce(
       (accumulator, cartItem) =>
         accumulator + cartItem.quantity * cartItem.price,
@@ -77,7 +79,7 @@ export const addToCart = (payload) => async (dispatch, getState) => {
   dispatch({ type: "general/SET_IS_LOADING", payload: true })
 
   const state = getState()
-  const updatedData = await addItemToCart(payload, state.user.cartDocumentId)
+  const updatedData = await create_cart_item(payload, state.user.cartDocumentId)
 
   const cartTotal = updatedData.items.reduce(
     (accumulator, cartItem) => accumulator + cartItem.quantity * cartItem.price,
@@ -98,7 +100,7 @@ export const checkout = () => async (dispatch, getState) => {
   const state = getState()
   const cartDocumentId = state.user.cartDocumentId
 
-  await clearCart(cartDocumentId)
+  await set_cart_empty(cartDocumentId)
 
   const cartPayload = {
     cartTotal: 0,
@@ -109,12 +111,13 @@ export const checkout = () => async (dispatch, getState) => {
   dispatch({ type: "general/SET_IS_LOADING", payload: false })
 }
 
+// removeItemFromCart
 export const removeItemFromCartThunk = (name) => async (dispatch, getState) => {
   dispatch({ type: "general/SET_IS_LOADING", payload: true })
 
   const state = getState()
   const cartDocumentId = state.user.cartDocumentId
-  const updatedData = await removeItemFromCart(name, cartDocumentId)
+  const updatedData = await delete_cart_item(name, cartDocumentId)
 
   const cartTotal = updatedData.items.reduce(
     (accumulator, cartItem) => accumulator + cartItem.quantity * cartItem.price,
@@ -129,6 +132,7 @@ export const removeItemFromCartThunk = (name) => async (dispatch, getState) => {
   dispatch({ type: "general/SET_IS_LOADING", payload: false })
 }
 
+// updateCartQuantity
 export const updateCartQuantityThunk =
   (name, quantity) => async (dispatch, getState) => {
     dispatch({ type: "general/SET_IS_LOADING", payload: true })
@@ -136,7 +140,7 @@ export const updateCartQuantityThunk =
     const state = getState()
     const cartDocumentId = state.user.cartDocumentId
 
-    const updatedCart = await updateCartQuantity(name, quantity, cartDocumentId)
+    const updatedCart = await update_cart_item(name, quantity, cartDocumentId)
 
     const cartTotal = updatedCart.items.reduce(
       (accumulator, cartItem) =>
