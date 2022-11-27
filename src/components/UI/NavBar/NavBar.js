@@ -36,6 +36,7 @@ import {
 function NavBar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const firstName = useSelector((state) => state.user.firstName)
   const itemsInCart = useSelector((state) => state.cart.items.length)
@@ -50,7 +51,14 @@ function NavBar() {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    navigate("/search")
+
+    let queryParams = ""
+    if (search) {
+      queryParams = `?q=${search}`
+    }
+    navigate("/search" + queryParams)
+
+    // navigate("/search")
     dispatch({ type: "search/SEARCH_TERM", payload: search })
   }
 
