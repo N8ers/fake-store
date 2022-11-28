@@ -162,7 +162,7 @@ function NavBar() {
       ) : (
         <Button
           variant="contained"
-          color="secondary"
+          style={{ backgroundColor: "#f6cbe7", color: "#7a85c1" }}
           sx={{ mt: 1 }}
           onClick={handleLogin}
         >

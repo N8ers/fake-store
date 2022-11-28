@@ -14,9 +14,11 @@ function Search() {
   const [resultsMessage, setResultsMessage] = useState("")
 
   useEffect(() => {
-    const result = searchResults.filter((item) =>
-      item.name.includes(searchTerm)
-    )
+    const result = searchResults.filter((item) => {
+      const itemNameLower = item.name.toLowerCase()
+      const searchTermLower = searchTerm.toLowerCase()
+      return itemNameLower.includes(searchTermLower)
+    })
     setFilteredResults(result)
   }, [searchResults, searchTerm])
 
